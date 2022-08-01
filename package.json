@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "build-dev": "webpack --mode development",
-    "build-prod": "webpack --mode production",
+    "dev": "NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack serve --open",
+    "build": "webpack",
     "test": "jest",
-    "start": "webpack serve --hot --mode development"
+    "start": "NODE_ENV=production node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -51,7 +51,9 @@
   },
   "dependencies": {
     "chart.js": "^3.8.2",
+    "cors": "^2.8.5",
     "express": "^4.18.1",
+    "nodemon": "^2.0.19",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",

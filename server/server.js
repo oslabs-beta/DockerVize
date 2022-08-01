@@ -18,7 +18,23 @@ app.use(cors());
 //serve static files
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
-//catch-all routh handler for any requests to an unknown route
+
+//to avoid axios CORS errors IN development
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+//   res.header('Access-Control-Allow-Methods', '*');
+
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
+
+
+
+//catch-all route handler for any requests to an unknown route
 app.get('*', (req, res) => {
     return res.status(404).send('This is an unknown URL.');
   })
@@ -39,3 +55,6 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`);
   });
+
+
+module.exports =  {app};
