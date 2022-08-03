@@ -1,6 +1,114 @@
 $primary-color: white;
 $bg: black;
+
+* {
+  margin: 0px;
+  padding: 0;
+  background-color: #f0f7f4;
+}
+
 h1 {
   color: $primary-color;
   background-color: $bg;
+}
+
+.form-switch {
+  display: inline-block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.form-switch i {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 46px;
+  height: 26px;
+  background-color: #e6e6e6;
+  border-radius: 23px;
+  vertical-align: text-bottom;
+  transition: all 0.3s linear;
+}
+.form-switch i::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 42px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 11px;
+  transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+  transition: all 0.25s linear;
+}
+.form-switch i::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 11px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+  transform: translate3d(2px, 2px, 0);
+  transition: all 0.2s ease-in-out;
+}
+.form-switch:active i::after {
+  width: 28px;
+  transform: translate3d(2px, 2px, 0);
+}
+.form-switch:active input:checked + i::after {
+  transform: translate3d(16px, 2px, 0);
+}
+.form-switch input {
+  display: none;
+}
+.form-switch input:checked + i {
+  background-color: #4bd763;
+}
+.form-switch input:checked + i::before {
+  transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
+}
+.form-switch input:checked + i::after {
+  transform: translate3d(22px, 2px, 0);
+}
+
+.docker-container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.container {
+  display: flex;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.btns {
+  display: flex;
+}
+
+.ea-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.header-container {
+  height: 50px;
+  margin-bottom: 20px;
+  background-color: #99e1d9;
+}
+
+.header-component {
+  background-color: #99e1d9;
 }
