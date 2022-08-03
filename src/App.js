@@ -1,5 +1,5 @@
-
-import React from "react";
+import React from 'react';
+import Component from './components/component';
 import { hot } from 'react-hot-loader/root';
 
 class App extends React.Component {
@@ -8,7 +8,7 @@ class App extends React.Component {
     return (
       <>
         <h1>
-          Hello {name}
+          <Component />
         </h1>
       </>
     );
