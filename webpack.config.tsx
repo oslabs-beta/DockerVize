@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: ['react-hot-loader/patch', './src/index.js'],
@@ -46,14 +46,17 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.jsx', '.js', '.json'],
+  },
   plugins: [
-    new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) =>
-        '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
-        htmlWebpackPlugin.options.title +
-        '</title></head><body><div id="app"></div></body></html>',
-      filename: 'index.html',
-    }),
+    // new HtmlWebpackPlugin({
+    //   templateContent: ({ htmlWebpackPlugin }) =>
+    //     '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
+    //     htmlWebpackPlugin.options.title +
+    //     '</title></head><body><div id="app"></div></body></html>',
+    //   filename: 'index.html',
+    // }),
   ],
   devServer: {
     host: 'localhost',
