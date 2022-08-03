@@ -5,7 +5,7 @@ import { render, screen, includes } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import App from '../src/App';
-import Component from '../src/components/component';
+import Component from '../src/containers/containers';
 import store from '../src/store';
 
 describe('Testing React components', () => {
