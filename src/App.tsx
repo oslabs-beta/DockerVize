@@ -1,14 +1,16 @@
 import React from 'react';
 // import { Routes, Route } from 'react-router-dom';
-import Containers from './components/containers';
+import DockerContainers from './containers/dockerContainers';
+import Header from './containers/header';
 
 const App = (): JSX.Element => {
   return (
     <>
-      <h1>
-        <Containers />
-        <div>Hi</div>
-      </h1>
+      <Header />
+      <div>
+        <DockerContainers />
+        {/* <MetricContainers/> */}
+      </div>
     </>
   );
 };
