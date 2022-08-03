@@ -6,8 +6,6 @@ import App from './App';
 import './styles.css';
 import './styles.scss';
 
-// ReactDOM.render(<App />, document.getElementById('app'));
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

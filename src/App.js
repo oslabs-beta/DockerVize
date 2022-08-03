@@ -8,6 +8,7 @@ class App extends React.Component {
       <>
         <h1>
           <Component />
+          <div>hi</div>
         </h1>
       </>
     );
