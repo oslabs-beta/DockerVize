@@ -3,13 +3,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
+  entry: ['react-hot-loader/patch', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -21,22 +18,15 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.png$/,
@@ -44,18 +34,26 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
-      }
-    ]
+              mimetype: 'image/png',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: ['ts-loader'],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
+      templateContent: ({ htmlWebpackPlugin }) =>
+        '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
+        htmlWebpackPlugin.options.title +
+        '</title></head><body><div id="app"></div></body></html>',
       filename: 'index.html',
-    })
+    }),
   ],
   devServer: {
     host: 'localhost',
