@@ -17,11 +17,11 @@ type ContainerResponse = string;
 // Define a service using a base URL and expected endpoints
 export const containerAPI = createApi({
   reducerPath: 'containerAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/' }),
 
   endpoints: (builder) => ({
     getContainers: builder.query<ContainerResponse, void>({
-      query: () => `pokemon/bulbasaur`,
+      query: () => `container`,
     }),
   }),
 });

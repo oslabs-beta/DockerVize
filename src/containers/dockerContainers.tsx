@@ -5,6 +5,7 @@ import { useGetContainersQuery } from '../services/containerQuery';
 const DockerContainers: React.FC = () => {
   const { data, error, isLoading } = useGetContainersQuery();
   console.log('Data: ', data);
+  console.log('Error: ', error);
 
   // const listOfContainers: React.ReactElement[] = [];
   // if (data) {

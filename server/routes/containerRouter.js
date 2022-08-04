@@ -15,7 +15,7 @@ containerRouter.get(
   containerController.getContainers,
   (req, res) => {
     // return res.status(200).send(res.locals.containers);
-    return res.status(200).send('container123');
+    return res.status(200).json('container123');
 
     // console.log(res.locals.containers);
   }
