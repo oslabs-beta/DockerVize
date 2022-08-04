@@ -1,11 +1,12 @@
 import React from 'react';
 import { ObjectElement } from '../services/containerQuery';
 
-const Container: React.FC<ObjectElement> = ({}) => {
+const Container: React.FC<ObjectElement> = (props) => {
+  const { name } = props;
   return (
     <div className='container'>
       <div>
-        <span>Container Name</span>
+        <span>{name}</span>
       </div>
 
       <div className='btns'>
