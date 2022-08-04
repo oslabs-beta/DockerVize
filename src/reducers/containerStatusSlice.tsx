@@ -1,17 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ToggleState {
-  statusToggle?: boolean;
-  dataToggle?: boolean;
+  statusToggle: boolean;
+  dataToggle: boolean;
 }
 
 export interface ContainerState {
-  [id: string]: ToggleState;
+  id?: ToggleState;
 }
 
 const initialState: ContainerState = {
   //Intialize state based on containers status at runtime
-  value: {},
 };
 
 export const containerStatusSlice = createSlice({

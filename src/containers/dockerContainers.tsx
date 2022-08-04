@@ -1,16 +1,37 @@
 import React from 'react';
-import Container from './container';
+// import Container from '../components/container';
+import { useGetContainersQuery } from '../services/containerQuery';
 
 const DockerContainers: React.FC = () => {
-  // const listOfContainers: React.FC = <Container />;
+  const { data, error, isLoading } = useGetContainersQuery();
+  console.log('Data: ', data);
 
+  // const listOfContainers: React.ReactElement[] = [];
+  // if (data) {
+  //   for (const el of data) {
+  //     listOfContainers.push(<Container containerData:any={el} />);
+  //   }
+  // }
+
+  // let test;
+  // if (data && data[0]) {
+  //   test = data[0][id];
+  // } else {
+  //   test = {};
+  // }
   return (
     <div className='docker-container'>
       <div>Docker Containers</div>
-      {/* <div>{listOfContainers}</div> */}
-      <Container />
-      <Container />
-      <Container />
+      {error ? (
+        <>Oh no, there was an error</>
+      ) : isLoading ? (
+        <>Loading...</>
+      ) : data ? (
+        <>
+          {/* <div>{listOfContainers}</div> */}
+          <div>Hi</div>
+        </>
+      ) : null}
     </div>
   );
 };
