@@ -1,6 +1,7 @@
 import React from 'react';
+import { ObjectElement } from '../services/containerQuery';
 
-const Container: React.FC = () => {
+const Container: React.FC<ObjectElement> = ({}) => {
   return (
     <div className='container'>
       <div>

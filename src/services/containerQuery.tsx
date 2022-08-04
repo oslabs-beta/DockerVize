@@ -1,20 +1,17 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// interface ToggleState {
-//   statusToggle: boolean;
-//   dataToggle: boolean;
+export interface ObjectElement {
+  id: string;
+  name: string;
+  state: string;
+}
+
+export type ContainerResponse = ObjectElement[];
+// export interface ContainerResponse {
+//   data: ObjectElement[];
 // }
 
-// interface ResponseArray {
-//   id?: ToggleState;
-// }
-
-// interface ContainerResponse extends Array<ResponseArray> {}
-
-type ContainerResponse = string;
-
-// Define a service using a base URL and expected endpoints
 export const containerAPI = createApi({
   reducerPath: 'containerAPI',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/' }),

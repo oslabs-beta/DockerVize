@@ -14,8 +14,8 @@ containerRouter.get(
   containerController.checkSocat,
   containerController.getContainers,
   (req, res) => {
-    // return res.status(200).send(res.locals.containers);
-    return res.status(200).json('container123');
+    return res.status(200).json(res.locals.containers);
+    // return res.status(200).json([{ id: '1212' }]);
 
     // console.log(res.locals.containers);
   }
