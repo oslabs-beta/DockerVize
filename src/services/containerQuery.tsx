@@ -1,4 +1,3 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export interface ObjectElement {
@@ -8,9 +7,6 @@ export interface ObjectElement {
 }
 
 export type ContainerResponse = ObjectElement[];
-// export interface ContainerResponse {
-//   data: ObjectElement[];
-// }
 
 export const containerAPI = createApi({
   reducerPath: 'containerAPI',

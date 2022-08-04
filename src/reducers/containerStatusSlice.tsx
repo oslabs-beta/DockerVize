@@ -1,33 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface ToggleState {
-  statusToggle: boolean;
-  dataToggle: boolean;
+interface OneState {
+  name: string;
+  statusState: boolean;
+  dataState: boolean;
 }
 
-export interface ContainerState {
-  id?: ToggleState;
+interface AllStates {
+  id?: OneState;
 }
 
-const initialState: ContainerState = {
-  //Intialize state based on containers status at runtime
-};
+const initialState: AllStates = {};
 
 export const containerStatusSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    toggle: (state) => {
+    getStates: () => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state = state;
+      // state.id.statusState = !state.id.statusState;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { toggle } = containerStatusSlice.actions;
+export const { getStates } = containerStatusSlice.actions;
 
 export default containerStatusSlice.reducer;
