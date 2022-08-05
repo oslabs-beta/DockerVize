@@ -5,11 +5,14 @@ import {
   ObjectElement,
 } from '../services/containerQuery';
 
+import { useDispatch } from 'react-redux';
+import { getStates } from '../reducers/containerStatusSlice';
+
 const DockerContainers: React.FC = () => {
   const { data, error, isLoading } = useGetContainersQuery();
 
-  console.log('Data: ', data);
-  console.log('Error: ', error);
+  const dispatch = useDispatch();
+  if (data) dispatch(getStates(data));
 
   return (
     <div className='docker-container'>

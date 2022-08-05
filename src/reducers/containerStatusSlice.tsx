@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ContainerResponse } from '../services/containerQuery';
 
 interface OneState {
   name: string;
@@ -7,6 +8,8 @@ interface OneState {
 }
 
 interface AllStates {
+  //There may be a problem here because the keys we are adding are not literally "id"
+  //ex: e08b7ffb0437706be2ba7082f6c38ab3fe1bd5d69f33b3a30f74ff790bcfb197
   id?: OneState;
 }
 
@@ -16,12 +19,24 @@ export const containerStatusSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    getStates: () => {
+    getStates: (state: AllStates, data: PayloadAction<ContainerResponse>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      // state.id.statusState = !state.id.statusState;
+      // const newState: AllStates = {};
+      for (let i = 0; i < data.payload.length; i++) {
+        const currentId: string = data.payload[i].id;
+        console.log(currentId);
+        if (!(data.payload[i].id in state)) {
+          //CONTINUE HERE
+          state[currentId] = {
+            name: 'test',
+            statusState: true,
+            dataState: true,
+          };
+        }
+      }
     },
   },
 });
