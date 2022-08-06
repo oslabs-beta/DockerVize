@@ -3,7 +3,8 @@ const metricsRouter = express.Router();
 const path = require('path');
 const metricsController = require('../controllers/metricsController')
 
-metricsRouter.get('/allMetrics', 
+metricsRouter.get('/', 
+metricsController.getData,
 
 (req, res) => {
 
@@ -11,11 +12,7 @@ metricsRouter.get('/allMetrics',
 )
 
 
-metricsRouter.get('/toggledMetrics', 
 
-(req, res) => {
 
-}
-)
 
 module.exports = metricsRouter;

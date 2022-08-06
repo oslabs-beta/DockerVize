@@ -1,5 +1,7 @@
 //controllers
-const { exec } = require('child_process');
+const { exec, execSync } = require('child_process');
+const awaitExec = require('await-exec');
+//const execSync = require('exec-sync');
 const axios = require('axios');
 
 const containerController = {};
@@ -32,7 +34,7 @@ containerController.startSocat = async (req, res, next) => {
   console.log('We are at the startSocat middleware (SECOND)');
     try {
         console.log('Socat starting')
-        await exec(`docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock`);
+        await exec(`docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2376:2376 bobrik/socat TCP-LISTEN:2376,fork UNIX-CONNECT:/var/run/docker.sock`);
         return next();
 
     }
@@ -54,7 +56,7 @@ containerController.checkSocat = async (req, res, next) => {
     //setTimeout because it can take a while for socat to boot up
     setTimeout(async () => {
       //wait a maximum of 20 seconds for the socat to boot up
-      if (counter === 10) {
+      if (counter === 100) {
         //console.log('counter has reached 10');
         //if it isn't booted up in 20 seconds send this error message
         const err =  {
@@ -95,33 +97,92 @@ containerController.checkSocat = async (req, res, next) => {
 
 
 containerController.getContainers = async (req, res, next) => {
-    try {
-      console.log('We are at the get containers middleware');
+  console.log('We are at the get containers middleware');
       //get all the data from the api and save it in result
-      const result = await axios.get('http://localhost:2375/containers/json?all=true');
+      const result = await axios.get('http://localhost:2376/containers/json?all=true');
       //console.log(result.data);
       //collect the needed info to render containers
       let newArr = []
       for(let i = 0; i < result.data.length; i++){
         let newObj = {};
-        newObj.id = result.data[i].Id
-        newObj.name = result.data[i].Names[0]
-        newObj.state = result.data[i].State
-        newArr.push(newObj)
+        newObj.id = result.data[i].Id;
+        newObj.name = result.data[i].Names[0];
+        newObj.state = result.data[i].State;
+        newArr.push(newObj);
       }
       //save the info on res locals containers
       res.locals.containers = newArr;
-      console.log(newArr);
-      return next();
-    } catch(err) {
-      console.log('error')
-      return next(err)
-    }
-  }
-  // console.log(typeof containerController.getContainers);
+     // console.log(newArr);
+      return next();  
+
+  };
 
 
- //getContainers();
+//This is the exec call to get the container info.
+//   containerController.getContainerInfo = async (req, res, next) => {
+//     console.log('we are at the get container info middleware');
+//     //console.log('containers Array', containersArray);
+//     //let containersArray = [];
+//     const containerInfo = [];
+
+//     for (let i = 0; i < res.locals.containers.length - 1 ; i++){
+//       const containerID = res.locals.containers[i];
+//       const containerObj = {};
+//       awaitExec(`docker inspect ${containerID}`, (error, stdout, stderr) => {
+//         console.log('weve entered exec sync');
+//           if (stderr){
+//             console.log(stderr);
+//             // res.locals.containerInfo += stderr;
+//             // return next();
+//           }else if(stdout){
+//             const stdoutObj = JSON.parse(stdout);
+//             //console.log('std out type' , typeof stdoutObj);
+//             //console.log('std out object' , stdoutObj[0]);
+//             //console.log('std out name' , stdoutObj[0].Name)
+//             //console.log('stdout Status', stdoutObj[0].State.Status)
+//             containerObj.id = containerID;
+//             containerObj.name = stdoutObj[0].Name;
+//             containerObj.status = stdoutObj[0].State.Status;
+//             containerInfo.push(containerObj);
+//             console.log('console log in for loop', containerInfo);
+            
+//           }
+
+//         })
+        
+          
+        
+//       }
+//       return next();
+
+// }  
+
+
+//This is the exec call to get the containers
+// try { await exec('docker ps -a -q', (error, stdout, stderr) => {
+//   if (stderr){
+//     res.locals.containers = stderr;
+//     return next();
+//   }if(stdout){
+//     const stdArray = stdout.split('\n');
+//     console.log('stdArray of IDs' , stdArray);
+//     res.locals.containers = stdArray;
+//     return next();
+//   }
+// })
+
+// } catch(err) {
+// console.log('error')
+// return next(err)
+// }
+    
+
+
+
+
+
+     
+  
 
 
 module.exports = containerController;

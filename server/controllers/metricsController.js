@@ -1,17 +1,16 @@
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const axios = require('axios');
 
 const metricsController = {};
 
 
-metricsController.getToggledData = async (req, res, next) => {
+metricsController.getData = async (req, res, next) => {
     try {
-        const { id } = req.query;
-        const stats = await axios.get(`http://localhost:2375/containers/${id}/stats?stream=false`);
-        console.log(stats.data.cpu_stats); 
-        console.log(stats.data.memory_stats);
+        //const { id } = req.query;
+        const stats = await axios.get(`http://localhost:9101/containers`);
+        console.log('this is the entire stats object', stats.data); 
     } catch(err) {
-        console.log('error');
+        console.log(`${err}`);
     }
 }
 
