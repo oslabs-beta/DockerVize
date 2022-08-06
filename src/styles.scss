@@ -17,6 +17,7 @@ h1 {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+
 .form-switch i {
   position: relative;
   display: inline-block;
@@ -28,6 +29,7 @@ h1 {
   vertical-align: text-bottom;
   transition: all 0.3s linear;
 }
+
 .form-switch i::before {
   content: '';
   position: absolute;
@@ -39,6 +41,7 @@ h1 {
   transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
   transition: all 0.25s linear;
 }
+
 .form-switch i::after {
   content: '';
   position: absolute;
@@ -51,22 +54,29 @@ h1 {
   transform: translate3d(2px, 2px, 0);
   transition: all 0.2s ease-in-out;
 }
+
 .form-switch:active i::after {
   width: 28px;
   transform: translate3d(2px, 2px, 0);
 }
+
 .form-switch:active input:checked + i::after {
   transform: translate3d(16px, 2px, 0);
 }
+
 .form-switch input {
   display: none;
 }
+
 .form-switch input:checked + i {
-  background-color: #4bd763;
+  // background-color: #4bd763;
+  background-color: #11c1e0;
 }
+
 .form-switch input:checked + i::before {
   transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
 }
+
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
 }
@@ -106,9 +116,52 @@ h1 {
 .header-container {
   height: 50px;
   margin-bottom: 20px;
-  background-color: #99e1d9;
+  border: 1px solid rgba(17, 193, 224, 0.15); // background-color: #99e1d9;
 }
 
 .header-component {
-  background-color: #99e1d9;
+  // background-color: #99e1d9;
+}
+
+//Quit Button
+.header-component button {
+  border-radius: 5px;
+  padding: 0.8em 1.8em;
+  border: 2px solid #11c1e0;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: inherit;
+  color: #11c1e0;
+}
+
+.header-component button::before {
+  content: '';
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #11c1e0;
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.header-component button:hover::before {
+  width: 105%;
+}
+
+.header-component button:hover {
+  color: #111;
+}
+
+.header-component button:active {
+  filter: brightness(0.8);
 }

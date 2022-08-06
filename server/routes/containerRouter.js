@@ -10,7 +10,6 @@ const cadvisorController = require('../controllers/cadvisorController');
 
 
 
-
 containerRouter.get(
     '/',
     //console.log('We are at the container router'),
