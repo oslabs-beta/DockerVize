@@ -1,5 +1,5 @@
 import React from 'react';
-import { ObjectElement } from '../services/containerQuery';
+import { ObjectElement } from '../types';
 
 const Container: React.FC<ObjectElement> = (props) => {
   const { name, state, id } = props;

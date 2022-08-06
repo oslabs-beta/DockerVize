@@ -1,18 +1,17 @@
 import React from 'react';
 import Container from '../components/container';
-import {
-  useGetContainersQuery,
-  ObjectElement,
-} from '../services/containerQuery';
+import { useGetContainersQuery } from '../services/containerQuery';
+
+import { ObjectElement } from '../types';
 
 import { useDispatch } from 'react-redux';
-import { getStates } from '../reducers/containerStatusSlice';
+import { getContainerStates } from '../reducers/containerStatusSlice';
 
 const DockerContainers: React.FC = () => {
   const { data, error, isLoading } = useGetContainersQuery();
 
   const dispatch = useDispatch();
-  if (data) dispatch(getStates(data));
+  if (data) dispatch(getContainerStates(data));
 
   return (
     <div className='docker-container'>

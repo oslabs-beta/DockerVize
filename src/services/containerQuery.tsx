@@ -1,12 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-export interface ObjectElement {
-  id: string;
-  name: string;
-  state: string;
-}
-
-export type ContainerResponse = ObjectElement[];
+import { ContainerResponse } from '../types';
 
 export const containerAPI = createApi({
   reducerPath: 'containerAPI',
