@@ -1,9 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { quitButton } from '../reducers/containerStatusSlice';
 
-const QuitButton: React.FC = () => (
-  <div className='header-component'>
-    <button>Quit</button>
-  </div>
-);
-
-export default QuitButton;
+export default function QuitButton() {
+  const dispatch = useDispatch();
+  return (
+    <div className='header-component'>
+      <button
+        onClick={() => {
+          dispatch(quitButton());
+        }}
+      >
+        Log State
+      </button>
+    </div>
+  );
+}

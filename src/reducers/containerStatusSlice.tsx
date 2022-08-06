@@ -1,34 +1,61 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
+import { ContainerResponse } from '../types';
 
-export interface ToggleState {
-  statusToggle?: boolean;
-  dataToggle?: boolean;
+interface OneState {
+  name: string;
+  statusState: boolean;
+  dataState: boolean;
 }
 
-export interface ContainerState {
-  [id: string]: ToggleState;
+interface AllStates {
+  //There may be a problem here because the keys we are adding are not literally "id"
+  //ex: e08b7ffb0437706be2ba7082f6c38ab3fe1bd5d69f33b3a30f74ff790bcfb197
+  [id: string]: OneState;
 }
 
-const initialState: ContainerState = {
-  //Intialize state based on containers status at runtime
-  value: {},
-};
+const initialState: AllStates = {};
 
 export const containerStatusSlice = createSlice({
-  name: 'counter',
+  name: 'containerStatus',
   initialState,
   reducers: {
-    toggle: (state) => {
+    getContainerStates: (
+      state: AllStates,
+      data: PayloadAction<ContainerResponse>
+    ) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state = state;
+
+      for (let i = 0; i < data.payload.length; i++) {
+        console.log(data.payload);
+        const currentId: string = data.payload[i].id;
+        if (!(data.payload[i].id in state)) {
+          state[currentId] = {
+            name: data.payload[i].name,
+            statusState: data.payload[i].state === 'running',
+            dataState: false,
+          };
+        }
+      }
+    },
+    quitButton: (state: AllStates) => {
+      console.log('newState: ', current(state));
+    },
+    toggleStatus: (state: AllStates, id: PayloadAction<string>) => {
+      state[id.payload].statusState = !current(state)[id.payload].statusState;
+      console.log('this is state: ', current(state)[id.payload]);
+    },
+    toggleData: (state: AllStates, id: PayloadAction<string>) => {
+      state[id.payload].dataState = !current(state)[id.payload].dataState;
+      console.log('this is state: ', current(state)[id.payload]);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { toggle } = containerStatusSlice.actions;
+export const { getContainerStates, quitButton, toggleStatus, toggleData } =
+  containerStatusSlice.actions;
 
 export default containerStatusSlice.reducer;
