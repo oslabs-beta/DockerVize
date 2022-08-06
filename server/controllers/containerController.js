@@ -152,7 +152,7 @@ containerController.getContainers2 = async (req, res, next) => {
         // console.log(stdoutObj);
         containerObj.id = containerID;
         containerObj.name = stdoutObj[0].Name;
-        containerObj.status = stdoutObj[0].State.Status;
+        containerObj.state = stdoutObj[0].State.Status;
         containerInfo.push(containerObj);
       }
     }
