@@ -43,10 +43,19 @@ export const containerStatusSlice = createSlice({
     quitButton: (state: AllStates) => {
       console.log('newState: ', current(state));
     },
+    toggleStatus: (state: AllStates, id: PayloadAction<string>) => {
+      state[id.payload].statusState = !current(state)[id.payload].statusState;
+      console.log('this is state: ', current(state)[id.payload]);
+    },
+    toggleData: (state: AllStates, id: PayloadAction<string>) => {
+      state[id.payload].dataState = !current(state)[id.payload].dataState;
+      console.log('this is state: ', current(state)[id.payload]);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getContainerStates, quitButton } = containerStatusSlice.actions;
+export const { getContainerStates, quitButton, toggleStatus, toggleData } =
+  containerStatusSlice.actions;
 
 export default containerStatusSlice.reducer;
