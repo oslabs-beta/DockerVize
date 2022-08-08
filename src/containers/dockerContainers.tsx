@@ -9,7 +9,7 @@ import { getContainerStates } from '../reducers/containerStatusSlice';
 
 const DockerContainers: React.FC = () => {
   const { data, error, isLoading } = useGetContainersQuery();
-
+  console.log(data);
   const dispatch = useDispatch();
   if (data) dispatch(getContainerStates(data));
 
