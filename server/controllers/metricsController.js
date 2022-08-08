@@ -3,7 +3,6 @@ const axios = require('axios');
 
 const metricsController = {};
 
-
 metricsController.getData = async (req, res, next) => {
     try {
         //const { id } = req.query;
