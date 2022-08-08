@@ -1,8 +1,9 @@
 //controllers
 const { exec, execSync } = require('child_process');
-const awaitExec = require('await-exec');
+//const awaitExec = require('await-exec');
 //const execSync = require('exec-sync');
 const axios = require('axios');
+const path = require('path');
 
 const containerController = {};
 
@@ -29,6 +30,13 @@ const containerController = {};
 //       });
 //     }
 // }
+
+
+containerController.startProm = async (req, res, next) => {  
+  exec(`docker run --name prometheus -p 9090:9090 -d -v ${path.resolve(__dirname, '../assets/prometheus.yaml')}:/etc/prometheus/prometheus.yml prom/prometheus`, (error, stdout, stderr) => {});  
+  return next();
+}
+
 
 containerController.startSocat = async (req, res, next) => {
   console.log('We are at the startSocat middleware (SECOND)');

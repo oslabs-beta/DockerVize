@@ -17,7 +17,7 @@ containerRouter.get(
     // console.log(typeof containerController.startSocat),
    // cadvisorController.restartCadvisor,
 
-    //containerController.startProm,
+    containerController.startProm,
     containerController.startSocat,
     containerController.checkSocat,
     cadvisorController.startCadvisor,
