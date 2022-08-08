@@ -14,12 +14,12 @@ containerRouter.get(
   // console.log(typeof containerController.startSocat),
   // cadvisorController.restartCadvisor,
 
-  //containerController.startProm,
+  // containerController.startProm,
   // containerController.startSocat,
   // containerController.checkSocat,
-  // cadvisorController.startCadvisor,
-  // containerController.getContainers,
-  containerController.getContainers2,
+  cadvisorController.startCadvisor,
+  // containerController.getContainersSocat,
+  containerController.getContainers,
 
   (req, res) => {
     return res.status(200).send(res.locals.containers);

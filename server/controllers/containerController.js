@@ -6,29 +6,58 @@ const axios = require('axios');
 
 const containerController = {};
 
-//Standard middleware error handling won't work here
-// conController.restartSocat = async (req, res, next) => {
-//   exec('docker start socat');
-//   return next();
-// }
+// This is the exec call to get the container info.
+containerController.getContainers = async (req, res, next) => {
+  console.log('Running getContainers2 middleware...');
+  const containerInfo = [];
 
-// //docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock
-// conController.startSocat = async (req, res, next) => {
-//   if (res.locals.running) return next();
-//   await exec(`docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock`, (error, stdout, stderr) => {});
-//   return next();
-// }
-// containerController.middlewareCheck = (req, res, next) => {
-//     try {
-//       res.locals.message = 'We are at the startSocat middlewares';
-//       return next();
-//     } catch (error) {
-//       return next({
-//         log: `Error in containerController.middlewareCheck: ${error}`,
-//         message: { err: `Can't complete middlewareCheck` },
-//       });
-//     }
-// }
+  let rawData = await awaitExec(`docker ps --all --quiet`);
+  rawData = rawData.stdout;
+
+  const getDockerIds = (rawData) => {
+    const dockerIds = [];
+    let dockerId = [];
+
+    for (let i = 0; i < rawData.length; i++) {
+      if (rawData[i] === '\n') {
+        dockerIds.push(dockerId.join(''));
+        dockerId = [];
+        continue;
+      }
+      dockerId.push(rawData[i]);
+    }
+    return dockerIds;
+  };
+  const dockerIds = getDockerIds(rawData);
+  // console.log(dockerIds);
+
+  for (let i = 0; i < dockerIds.length; i++) {
+    const containerID = dockerIds[i];
+    const containerObj = {};
+    const output = await awaitExec(`docker inspect ${containerID}`);
+
+    for (const key in output) {
+      if (key === 'stdout') {
+        // console.log(`${key}`);
+        const stdoutObj = JSON.parse(output[key]);
+        // console.log(stdoutObj);
+        containerObj.id = containerID;
+        containerObj.name = stdoutObj[0].Name;
+        containerObj.state = stdoutObj[0].State.Status;
+        containerInfo.push(containerObj);
+      }
+    }
+
+    // containerObj.id = containerID;
+    // containerObj.name = stdoutObj[0].Name;
+    // containerObj.status = stdoutObj[0].State.Status;
+
+    // console.log(output);
+  }
+  console.log(containerInfo);
+  res.locals.containers = containerInfo;
+  return next();
+};
 
 containerController.startSocat = async (req, res, next) => {
   console.log('We are at the startSocat middleware (SECOND)');
@@ -82,18 +111,8 @@ containerController.checkSocat = async (req, res, next) => {
   };
   socatCheck();
 };
-//   try{
-//       await exec('docker ps', (error, stdout, stderr) => {
-//           if(stdout.includes('socat'))return next();
-//           else{
 
-//           }
-//       })
-//   }catch(err){
-
-//   }
-
-containerController.getContainers = async (req, res, next) => {
+containerController.getContainersSoCat = async (req, res, next) => {
   console.log('We are at the get containers middleware');
   //get all the data from the api and save it in result
   const result = await axios.get(
@@ -115,57 +134,28 @@ containerController.getContainers = async (req, res, next) => {
   return next();
 };
 
-// This is the exec call to get the container info.
-containerController.getContainers2 = async (req, res, next) => {
-  console.log('Running getContainers2 middleware...');
-  const containerInfo = [];
+//Standard middleware error handling won't work here
+// conController.restartSocat = async (req, res, next) => {
+//   exec('docker start socat');
+//   return next();
+// }
 
-  let rawData = await awaitExec(`docker ps --all --quiet`);
-  rawData = rawData.stdout;
-
-  const getDockerIds = (rawData) => {
-    const dockerIds = [];
-    let dockerId = [];
-
-    for (let i = 0; i < rawData.length; i++) {
-      if (rawData[i] === '\n') {
-        dockerIds.push(dockerId.join(''));
-        dockerId = [];
-        continue;
-      }
-      dockerId.push(rawData[i]);
-    }
-    return dockerIds;
-  };
-  const dockerIds = getDockerIds(rawData);
-  // console.log(dockerIds);
-
-  for (let i = 0; i < dockerIds.length; i++) {
-    const containerID = dockerIds[i];
-    const containerObj = {};
-    const output = await awaitExec(`docker inspect ${containerID}`);
-
-    for (const key in output) {
-      if (key === 'stdout') {
-        // console.log(`${key}`);
-        const stdoutObj = JSON.parse(output[key]);
-        // console.log(stdoutObj);
-        containerObj.id = containerID;
-        containerObj.name = stdoutObj[0].Name;
-        containerObj.state = stdoutObj[0].State.Status;
-        containerInfo.push(containerObj);
-      }
-    }
-
-    // containerObj.id = containerID;
-    // containerObj.name = stdoutObj[0].Name;
-    // containerObj.status = stdoutObj[0].State.Status;
-
-    // console.log(output);
-  }
-  console.log(containerInfo);
-  res.locals.containers = containerInfo;
-  return next();
-};
+// //docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock
+// conController.startSocat = async (req, res, next) => {
+//   if (res.locals.running) return next();
+//   await exec(`docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock`, (error, stdout, stderr) => {});
+//   return next();
+// }
+// containerController.middlewareCheck = (req, res, next) => {
+//     try {
+//       res.locals.message = 'We are at the startSocat middlewares';
+//       return next();
+//     } catch (error) {
+//       return next({
+//         log: `Error in containerController.middlewareCheck: ${error}`,
+//         message: { err: `Can't complete middlewareCheck` },
+//       });
+//     }
+// }
 
 module.exports = containerController;
