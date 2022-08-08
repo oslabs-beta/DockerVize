@@ -18,7 +18,7 @@ const DockerContainers: React.FC = () => {
     <div className='docker-container'>
       <div>Docker Containers</div>
       {error ? (
-        <>Oh no, there was an error!!!</>
+        <>Oh no, there was an error</>
       ) : isLoading ? (
         <>Loading...</>
       ) : data ? (
