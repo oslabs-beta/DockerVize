@@ -1,6 +1,6 @@
 //controllers
 const { exec, execSync } = require('child_process');
-//const awaitExec = require('await-exec');
+const awaitExec = require('await-exec');
 //const execSync = require('exec-sync');
 const axios = require('axios');
 const path = require('path');
