@@ -4,7 +4,7 @@ const path = require('path');
 const metricsController = require('../controllers/metricsController')
 
 metricsRouter.get('/', 
-metricsController.getData,
+metricsController.getTotalCpu,
 
 (req, res) => {
 
