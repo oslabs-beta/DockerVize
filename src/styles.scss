@@ -165,3 +165,7 @@ h1 {
 .header-component button:active {
   filter: brightness(0.8);
 }
+
+.containers {
+  display: flex;
+}
