@@ -21,7 +21,7 @@ const MetricsContainers: React.FC = () => {
         <>Loading...</>
       ) : data ? (
         <>
-          <canvas id='myChart' width='500' height='600'></canvas>
+          {/* <canvas id='myChart' width='500' height='600'></canvas> */}
           <MemoryLineGraph />
         </>
       ) : null}
