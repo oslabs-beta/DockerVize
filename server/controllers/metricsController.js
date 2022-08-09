@@ -32,7 +32,7 @@ metricsController.getData = async (req, res, next) => {
         dockerData.push(stats.data.data.result[i]);
       }
     }
-    // console.log('data of each docker container: ', dockerData);
+    console.log('data of each docker container: ', dockerData);
 
     let totalData = {};
     for (let i = 0; i < dockerData.length; i++) {
@@ -43,12 +43,13 @@ metricsController.getData = async (req, res, next) => {
         totalData[dataPairArr[0]] += Number(dataPairArr[1]);
       });
     }
-    console.log('Total data for only docker containers: ', totalData);
+    // console.log('Total data for only docker containers: ', totalData);
 
-    res.locals.data = stats.data.data.result;
+    // res.locals.data = stats.data.data.result;
+    res.locals.data = dockerData;
     next();
   } catch (err) {
-    console.log('metricsController error: getData method');
+    // console.log('metricsController error: getData method');
     return next(err);
   }
 };

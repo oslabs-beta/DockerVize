@@ -3,7 +3,7 @@ const metricsRouter = express.Router();
 const path = require('path');
 const metricsController = require('../controllers/metricsController');
 
-metricsRouter.get(
+metricsRouter.post(
   '/',
   metricsController.convertToUnixTime,
   metricsController.getData,

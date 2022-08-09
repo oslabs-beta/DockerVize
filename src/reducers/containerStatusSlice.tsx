@@ -1,17 +1,24 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
-import { ContainerResponse } from '../types';
+import { ContainerResponse, MemoryElement } from '../types';
+
+//Types for getting container states
+// interface ArrayOfObj {
+//   name: string;
+//   id: string;
+//   memoryData: [string, string][];
+// }
 
 interface OneState {
   name: string;
   statusState: boolean;
   dataState: boolean;
+  memoryState: [][];
 }
-
 interface AllStates {
-  //There may be a problem here because the keys we are adding are not literally "id"
-  //ex: e08b7ffb0437706be2ba7082f6c38ab3fe1bd5d69f33b3a30f74ff790bcfb197
   [id: string]: OneState;
 }
+
+//Types for getting memory states
 
 const initialState: AllStates = {};
 
@@ -29,13 +36,14 @@ export const containerStatusSlice = createSlice({
       // immutable state based off those changes
 
       for (let i = 0; i < data.payload.length; i++) {
-        console.log(data.payload);
+        // console.log(data.payload);
         const currentId: string = data.payload[i].id;
         if (!(data.payload[i].id in state)) {
           state[currentId] = {
             name: data.payload[i].name,
             statusState: data.payload[i].state === 'running',
             dataState: false,
+            memoryState: [],
           };
         }
       }
@@ -45,17 +53,30 @@ export const containerStatusSlice = createSlice({
     },
     toggleStatus: (state: AllStates, id: PayloadAction<string>) => {
       state[id.payload].statusState = !current(state)[id.payload].statusState;
-      console.log('this is state: ', current(state)[id.payload]);
+      // console.log('this is state: ', current(state)[id.payload]);
     },
     toggleData: (state: AllStates, id: PayloadAction<string>) => {
       state[id.payload].dataState = !current(state)[id.payload].dataState;
-      console.log('this is state: ', current(state)[id.payload]);
+      // console.log('this is state: ', current(state)[id.payload]);
+    },
+    addMemory: (state: AllStates, id: PayloadAction<MemoryElement>) => {
+      const actualId = id.payload.metric.id.slice(8, 20);
+      state[actualId].memoryState = id.payload.values;
+    },
+    deleteMemory: (state: AllStates, id: PayloadAction<String>) => {
+      state[`${id.payload}`]['memoryState'] = [];
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getContainerStates, quitButton, toggleStatus, toggleData } =
-  containerStatusSlice.actions;
+export const {
+  getContainerStates,
+  quitButton,
+  toggleStatus,
+  toggleData,
+  addMemory,
+  deleteMemory,
+} = containerStatusSlice.actions;
 
 export default containerStatusSlice.reducer;

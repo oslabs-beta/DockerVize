@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ContainerResponse } from '../types';
+import { ContainerResponse, MemoryDataResponse } from '../types';
 
 export const containerAPI = createApi({
   reducerPath: 'containerAPI',
@@ -9,9 +9,26 @@ export const containerAPI = createApi({
     getContainers: builder.query<ContainerResponse, void>({
       query: () => `container`,
     }),
+    getData: builder.query<MemoryDataResponse, void>({
+      query: () => ({
+        url: 'metrics',
+        method: 'POST',
+        body: {
+          query: 'container_memory_usage_bytes',
+          secondsPassed: 300,
+          interval: 15,
+        },
+      }),
+    }),
   }),
 });
 
+// query: () => ({
+//   url: '/metrics',
+//   method: 'GET',
+//   body: {query: }
+// }),
+
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetContainersQuery } = containerAPI;
+export const { useGetContainersQuery, useGetDataQuery } = containerAPI;
