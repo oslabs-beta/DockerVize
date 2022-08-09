@@ -14,7 +14,7 @@ interface OneState {
   dataState: boolean;
   memoryState: [][];
 }
-interface AllStates {
+export interface AllStates {
   [id: string]: OneState;
 }
 

@@ -15,7 +15,7 @@ export const containerAPI = createApi({
         method: 'POST',
         body: {
           query: 'container_memory_usage_bytes',
-          secondsPassed: 300,
+          secondsPassed: 90,
           interval: 15,
         },
       }),
