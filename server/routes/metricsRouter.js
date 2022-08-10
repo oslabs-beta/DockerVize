@@ -10,7 +10,7 @@ const metricsController = require('../controllers/metricsController');
 // );
 
 
-metricsRouter.get(
+metricsRouter.post(
   '/cpu',
   metricsController.convertToUnixTime,
   metricsController.getCpu,

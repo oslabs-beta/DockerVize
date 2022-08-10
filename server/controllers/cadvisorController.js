@@ -1,4 +1,5 @@
 const { exec } = require('child_process');
+const awaitExec = require('await-exec');
 const path = require('path');
 //Running container advisor (cadvisor) to expose Docker container metrics to Prometheus
 
@@ -11,15 +12,33 @@ const cadvisorController = {};
 // };
 
 
+cadvisorController.restartCadvisor = async (req, res, next) => {
+  console.log('trying to start cadvisor')
+      exec ('docker start cadvisor', (error, stdout, stderr) => {
+      if (!stderr) {
+        res.locals.cadvisorRunning = 'yes';
+        return next();
+      }
+      else {
+       console.log('reg error', error);
+       console.log('stdout', stdout);
+       console.log('stderr', stderr);
+        return next ();
+      }
+      
+      
+    }); 
+    
+}
 cadvisorController.startCadvisor = async (req, res, next) => {
-  if (res.locals.cadvRunning) return next();
+  if (res.locals.cadvisorRunning) return next();
   if (process.platform === 'linux' || process.platform === 'win32') {
-    await exec(
+    await awaitExec(
       `docker run --volume=/sys:/sys:ro --volume=/cgroup:/cgroup:ro --publish=9101:8080 --detach=true --name=cadvisor gcr.io/cadvisor/cadvisor:latest`,
       (error, stdout, stderr) => {}
     );
   } else {
-    await exec(
+    await awaitExec(
       `docker run \
       --volume=/:/rootfs:ro \
       --volume=/var/run:/var/run:ro \
@@ -36,6 +55,7 @@ cadvisorController.startCadvisor = async (req, res, next) => {
       (error, stdout, stderr) => {}
     );
   }
+
   return next();
 };
 

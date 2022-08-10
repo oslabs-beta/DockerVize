@@ -4,7 +4,6 @@ const awaitExec = require('await-exec');
 //const execSync = require('exec-sync');
 const axios = require('axios');
 const path = require('path');
-
 const containerController = {};
 
 // This is the exec call to get the container info.
@@ -60,39 +59,22 @@ containerController.getContainers = async (req, res, next) => {
   return next();
 };
 
-containerController.startProm = async (req, res, next) => {  
-  exec(`docker run --name prometheus -p 9090:9090 -d -v ${path.resolve(__dirname, '../assets/prometheus.yaml')}:/etc/prometheus/prometheus.yml prom/prometheus`, (error, stdout, stderr) => {});  
-  return next();
-}
-
-containerController.startSocat = async (req, res, next) => {
-  console.log('We are at the startSocat middleware (SECOND)');
-  try {
-    console.log('Socat starting');
-    await exec(
-      `docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock`
-    );
-    return next();
-  } catch (err) {
-    console.log('error starting Socat');
-    return next(err);
-  }
-};
-// console.log(typeof containerController.startSocat);
-
-containerController.checkSocat = async (req, res, next) => {
+containerController.checkContainers = async (req, res, next) => {
   let counter = 0;
-  console.log('we are checking for socat');
-  //helper function to check if socat is running or not
-  const socatCheck = () => {
-    //setTimeout because it can take a while for socat to boot up
+  console.log('we are checking for cadvisor and prometheus');
+  //helper function to check if the containers are running or not
+  const containerCheck = () => {
+    //setTimeout because it can take a while for the containers to boot up
     setTimeout(async () => {
-      //wait a maximum of 20 seconds for the socat to boot up
+      console.log('Weve reached the container check helper function')
+      console.log('this is the counter', counter);
+      //wait a maximum of 20 seconds for the containers to boot up
       if (counter === 100) {
+        console.log('Weve entered the if statement where counter is equal to 100');
         //console.log('counter has reached 10');
         //if it isn't booted up in 20 seconds send this error message
         const err = {
-          log: 'Check socat middleware timed out',
+          log: 'Check containers middleware timed out',
           status: 500,
           message: {
             err: 'Container loading timed out. Please check if Docker Daemon or Docker Dashtop is running.',
@@ -100,68 +82,38 @@ containerController.checkSocat = async (req, res, next) => {
         };
         return next(err);
       } else {
-        await exec('docker ps', (error, stdout, stderr) => {
-          //check if the socat container is running
-          if (stdout.includes('socat')) {
+        console.log('Weve entered the else statement when counter is not equal to 100');
+        const result = exec ('docker ps', (error, stdout, stderr) => {
+          //check if the containers are running
+         
+          if (stdout.includes('cadvisor') && stdout.includes('prometheus')) {
             return next();
           }
           //if its not running, check again
-          else if (!stdout.includes('socat')) {
+          else {
             counter++;
             //console.log(counter);
-            socatCheck();
+            containerCheck();
           }
         });
       }
     }, 200);
   };
-  socatCheck();
-};
+  containerCheck();
+}
 
-containerController.getContainersSoCat = async (req, res, next) => {
-  console.log('We are at the get containers middleware');
-  //get all the data from the api and save it in result
-  const result = await axios.get(
-    'http://localhost:2375/containers/json?all=true'
-  );
-  //console.log(result.data);
-  //collect the needed info to render containers
-  let newArr = [];
-  for (let i = 0; i < result.data.length; i++) {
-    let newObj = {};
-    newObj.id = result.data[i].Id;
-    newObj.name = result.data[i].Names[0];
-    newObj.state = result.data[i].State;
-    newArr.push(newObj);
-  }
-  //save the info on res locals containers
-  res.locals.containers = newArr;
-  // console.log(newArr);
+containerController.stopContainers = async (req, res, next) => {
+  exec('docker stop prometheus docker stop cadvisor');
+  console.log('stopping prom and cadvisor')
+  res.locals.message = 'Cadvisor and prometheus containers have stopped'
   return next();
-};
+}
 
-//Standard middleware error handling won't work here
-// conController.restartSocat = async (req, res, next) => {
-//   exec('docker start socat');
-//   return next();
-// }
-
-// //docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock
-// conController.startSocat = async (req, res, next) => {
-//   if (res.locals.running) return next();
-//   await exec(`docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name socat -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock`, (error, stdout, stderr) => {});
-//   return next();
-// }
-// containerController.middlewareCheck = (req, res, next) => {
-//     try {
-//       res.locals.message = 'We are at the startSocat middlewares';
-//       return next();
-//     } catch (error) {
-//       return next({
-//         log: `Error in containerController.middlewareCheck: ${error}`,
-//         message: { err: `Can't complete middlewareCheck` },
-//       });
-//     }
-// }
+containerController.stopOne = async (req, res, next) => {
+  const { name } = req.body;
+  exec(`docker stop ${name}`)
+  res.locals.message = 'Stopping Container'
+  return next();
+}
 
 module.exports = containerController;
