@@ -3,14 +3,7 @@ const metricsRouter = express.Router();
 const path = require('path');
 const metricsController = require('../controllers/metricsController');
 
-// metricsRouter.get('/', 
-// metricsController.getTotalCpu, (req, res) => {
-//     return res.status(200).send(res.locals.data);
-//   }
-// );
-
-
-metricsRouter.get(
+metricsRouter.post(
   '/cpu',
   metricsController.convertToUnixTime,
   metricsController.getCpu,
@@ -20,8 +13,7 @@ metricsRouter.get(
   }
 );
 
-
-metricsRouter.get(
+metricsRouter.post(
   '/',
   metricsController.convertToUnixTime,
   metricsController.getMemoryData,

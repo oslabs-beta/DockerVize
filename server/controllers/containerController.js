@@ -9,7 +9,7 @@ const containerController = {};
 
 // This is the exec call to get the container info.
 containerController.getContainers = async (req, res, next) => {
-  console.log('Running getContainers2 middleware...');
+  console.log('Running getContainers middleware...');
   const containerInfo = [];
 
   let rawData = await awaitExec(`docker ps --all --quiet`);
@@ -55,15 +55,21 @@ containerController.getContainers = async (req, res, next) => {
 
     // console.log(output);
   }
-  console.log(containerInfo);
+  // console.log(containerInfo);
   res.locals.containers = containerInfo;
   return next();
 };
 
-containerController.startProm = async (req, res, next) => {  
-  exec(`docker run --name prometheus -p 9090:9090 -d -v ${path.resolve(__dirname, '../assets/prometheus.yaml')}:/etc/prometheus/prometheus.yml prom/prometheus`, (error, stdout, stderr) => {});  
+containerController.startProm = async (req, res, next) => {
+  exec(
+    `docker run --name prometheus -p 9090:9090 -d -v ${path.resolve(
+      __dirname,
+      '../assets/prometheus.yaml'
+    )}:/etc/prometheus/prometheus.yml prom/prometheus`,
+    (error, stdout, stderr) => {}
+  );
   return next();
-}
+};
 
 containerController.startSocat = async (req, res, next) => {
   console.log('We are at the startSocat middleware (SECOND)');
