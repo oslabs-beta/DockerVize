@@ -16,7 +16,6 @@ interface ChartObject {
 
 export default function memoryLineGraph() {
   const state = useSelector((state: AllStates) => state);
-  console.log('State count: ', state.statusToggle);
 
   let timeXAxis = [];
 

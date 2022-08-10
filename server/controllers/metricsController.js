@@ -32,7 +32,7 @@ metricsController.getData = async (req, res, next) => {
         dockerData.push(stats.data.data.result[i]);
       }
     }
-    console.log('data of each docker container: ', dockerData);
+    // console.log('data of each docker container: ', dockerData);
 
     let totalData = {};
     for (let i = 0; i < dockerData.length; i++) {

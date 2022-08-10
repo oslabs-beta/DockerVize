@@ -23,12 +23,5 @@ export const containerAPI = createApi({
   }),
 });
 
-// query: () => ({
-//   url: '/metrics',
-//   method: 'GET',
-//   body: {query: }
-// }),
-
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
+// Export hooks for usage in functional components, which are auto-generated based on the defined endpoints
 export const { useGetContainersQuery, useGetDataQuery } = containerAPI;

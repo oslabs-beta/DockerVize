@@ -13,13 +13,13 @@ const Container: React.FC<ObjectElement> = (props) => {
   const { name, state, id } = props;
 
   const dispatch = useDispatch();
-  const { data } = useGetDataQuery();
+
+  let { data } = useGetDataQuery(undefined, { pollingInterval: 3000 });
 
   const updateMemoryState = (id: string) => {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].metric.id.slice(8, 20) === id) {
-          console.log(data[i]);
           return data[i];
         }
       }
@@ -43,7 +43,7 @@ const Container: React.FC<ObjectElement> = (props) => {
             }}
           >
             {state === 'running' ? (
-              <input type='checkbox' checked></input>
+              <input type='checkbox' defaultChecked></input>
             ) : (
               <input type='checkbox'></input>
             )}
@@ -57,15 +57,17 @@ const Container: React.FC<ObjectElement> = (props) => {
             id={`dataButton${id}`}
             onChange={() => {
               if (state === 'running') {
-                const data = updateMemoryState(id);
+                const individualData = updateMemoryState(id);
 
                 dispatch(toggleData(id));
 
-                let remember = document.getElementById(`dataCheckmark${id}`);
+                let dataToggleBtn = document.getElementById(
+                  `dataCheckmark${id}`
+                );
 
-                if ((remember as HTMLInputElement).checked) {
-                  if (data) {
-                    dispatch(addMemory(data));
+                if ((dataToggleBtn as HTMLInputElement).checked) {
+                  if (individualData) {
+                    dispatch(addMemory(individualData));
                   }
                 } else {
                   if (id) {

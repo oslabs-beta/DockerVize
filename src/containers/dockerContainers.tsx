@@ -8,9 +8,8 @@ import { useDispatch } from 'react-redux';
 import { getContainerStates } from '../reducers/containerStatusSlice';
 
 const DockerContainers: React.FC = () => {
-  ``;
   const { data, error, isLoading } = useGetContainersQuery();
-  // console.log(data);
+
   const dispatch = useDispatch();
   if (data) dispatch(getContainerStates(data));
 
@@ -29,6 +28,7 @@ const DockerContainers: React.FC = () => {
                 id={container.id}
                 name={container.name}
                 state={container.state}
+                key={'key' + container.id}
               />
             );
           })}

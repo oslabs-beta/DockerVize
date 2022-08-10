@@ -36,7 +36,6 @@ export const containerStatusSlice = createSlice({
       // immutable state based off those changes
 
       for (let i = 0; i < data.payload.length; i++) {
-        // console.log(data.payload);
         const currentId: string = data.payload[i].id;
         if (!(data.payload[i].id in state)) {
           state[currentId] = {
