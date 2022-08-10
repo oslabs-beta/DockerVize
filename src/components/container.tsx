@@ -6,21 +6,46 @@ import {
   toggleData,
   addMemory,
   deleteMemory,
+  addCpu,
+  deleteCpu,
 } from '../reducers/containerStatusSlice';
-import { useGetDataQuery } from '../services/containerQuery';
+import {
+  useGetCPUDataQuery,
+  useGetMemoryDataQuery,
+} from '../services/containerQuery';
 
 const Container: React.FC<ObjectElement> = (props) => {
   const { name, state, id } = props;
 
   const dispatch = useDispatch();
 
-  let { data } = useGetDataQuery(undefined, { pollingInterval: 3000 });
+  // let { data } = useGetMemoryDataQuery(undefined, { pollingInterval: 3000 });
+  let { data } = useGetMemoryDataQuery();
+
+  let cpuData = useGetCPUDataQuery().data;
+
+  if (cpuData) {
+    console.log('cpu:', cpuData[0].id);
+  }
 
   const updateMemoryState = (id: string) => {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].metric.id.slice(8, 20) === id) {
           return data[i];
+        }
+      }
+    }
+    return;
+  };
+
+  const updateCpuState = (id: string) => {
+    if (cpuData) {
+      for (let i = 0; i < cpuData.length; i++) {
+        if (cpuData && cpuData[i].id) {
+          if (cpuData[i].id.slice(8, 20) === id) {
+            return cpuData[i];
+          }
         }
       }
     }
@@ -58,6 +83,7 @@ const Container: React.FC<ObjectElement> = (props) => {
             onChange={() => {
               if (state === 'running') {
                 const individualData = updateMemoryState(id);
+                const individualCpuData = updateCpuState(id);
 
                 dispatch(toggleData(id));
 
@@ -66,12 +92,14 @@ const Container: React.FC<ObjectElement> = (props) => {
                 );
 
                 if ((dataToggleBtn as HTMLInputElement).checked) {
-                  if (individualData) {
+                  if (individualData && individualCpuData) {
                     dispatch(addMemory(individualData));
+                    dispatch(addCpu(individualCpuData));
                   }
                 } else {
                   if (id) {
                     dispatch(deleteMemory(id));
+                    dispatch(deleteCpu(id));
                   }
                 }
               } else console.log('Container not running');

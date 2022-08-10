@@ -5,6 +5,7 @@ import { useGetContainersQuery } from '../services/containerQuery';
 import { useDispatch } from 'react-redux';
 import { getContainerStates } from '../reducers/containerStatusSlice';
 import MemoryLineGraph from '../components/memoryLineGraph';
+import CpuLineGraph from '../components/cpuLineGraph';
 
 const MetricsContainers: React.FC = () => {
   const { data, error, isLoading } = useGetContainersQuery();
@@ -14,13 +15,15 @@ const MetricsContainers: React.FC = () => {
 
   return (
     <div className='docker-container'>
-      <div>Memory Usage</div>
+      <div>Metrics</div>
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
         <>Loading...</>
       ) : data ? (
         <>
+          <CpuLineGraph />
+          <div style={{ height: '20px', width: '20px' }}></div>
           <MemoryLineGraph />
         </>
       ) : null}

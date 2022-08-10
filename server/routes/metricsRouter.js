@@ -4,9 +4,19 @@ const path = require('path');
 const metricsController = require('../controllers/metricsController');
 
 metricsRouter.post(
+  '/cpu',
+  metricsController.convertToUnixTime,
+  metricsController.getCpu,
+
+  (req, res) => {
+    return res.status(200).send(res.locals.data);
+  }
+);
+
+metricsRouter.post(
   '/',
   metricsController.convertToUnixTime,
-  metricsController.getData,
+  metricsController.getMemoryData,
 
   (req, res) => {
     return res.status(200).send(res.locals.data);

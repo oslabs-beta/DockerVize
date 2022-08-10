@@ -13,6 +13,7 @@ interface OneState {
   statusState: boolean;
   dataState: boolean;
   memoryState: [][];
+  cpuState: [][];
 }
 export interface AllStates {
   [id: string]: OneState;
@@ -43,6 +44,7 @@ export const containerStatusSlice = createSlice({
             statusState: data.payload[i].state === 'running',
             dataState: false,
             memoryState: [],
+            cpuState: [],
           };
         }
       }
@@ -65,6 +67,15 @@ export const containerStatusSlice = createSlice({
     deleteMemory: (state: AllStates, id: PayloadAction<String>) => {
       state[`${id.payload}`]['memoryState'] = [];
     },
+    addCpu: (state: AllStates, id: PayloadAction<MemoryElement>) => {
+      const actualId = id.payload.id.slice(8, 20);
+      console.log('actualId in addCpu: ', actualId);
+      state[actualId].cpuState = id.payload.values;
+      console.log('state: ', current(state));
+    },
+    deleteCpu: (state: AllStates, id: PayloadAction<String>) => {
+      state[`${id.payload}`]['cpuState'] = [];
+    },
   },
 });
 
@@ -76,6 +87,8 @@ export const {
   toggleData,
   addMemory,
   deleteMemory,
+  addCpu,
+  deleteCpu,
 } = containerStatusSlice.actions;
 
 export default containerStatusSlice.reducer;

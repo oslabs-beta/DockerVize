@@ -9,7 +9,7 @@ export const containerAPI = createApi({
     getContainers: builder.query<ContainerResponse, void>({
       query: () => `container`,
     }),
-    getData: builder.query<MemoryDataResponse, void>({
+    getMemoryData: builder.query<MemoryDataResponse, void>({
       query: () => ({
         url: 'metrics',
         method: 'POST',
@@ -20,8 +20,24 @@ export const containerAPI = createApi({
         },
       }),
     }),
+    getCPUData: builder.query<MemoryDataResponse, void>({
+      query: () => ({
+        url: 'metrics/cpu',
+        method: 'POST',
+        body: {
+          query:
+            'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100',
+          secondsPassed: 90,
+          interval: 15,
+        },
+      }),
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are auto-generated based on the defined endpoints
-export const { useGetContainersQuery, useGetDataQuery } = containerAPI;
+export const {
+  useGetContainersQuery,
+  useGetMemoryDataQuery,
+  useGetCPUDataQuery,
+} = containerAPI;
