@@ -4,7 +4,7 @@ $bg: black;
 * {
   margin: 0px;
   padding: 0;
-  background-color: #f0f7f4;
+  background-color: #ebf5ee;
 }
 
 h1 {
@@ -82,18 +82,26 @@ h1 {
 }
 
 .docker-container {
-  width: 40%;
+  width: 30%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: 0px 20px;
+  margin: 60px 20px;
+  // background-color: #11c1e0;
+}
+
+.metrics-container {
+  display: flex;
+
+  align-items: center;
+  margin: 60px 20px;
 }
 
 .container {
   display: flex;
-  border: 1px solid black;
-  border-radius: 10px;
+  border: 2px solid rgba(17, 193, 224, 0.4);
+  border-radius: 15px;
   width: 80%;
   justify-content: space-between;
   align-items: center;
@@ -125,6 +133,7 @@ h1 {
 
 //Quit Button
 .header-component button {
+  margin-top: 20px;
   border-radius: 5px;
   padding: 0.8em 1.8em;
   border: 2px solid #11c1e0;
@@ -168,4 +177,5 @@ h1 {
 
 .containers {
   display: flex;
+  height: 100%;
 }

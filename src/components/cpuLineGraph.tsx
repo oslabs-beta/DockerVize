@@ -82,9 +82,15 @@ export default function cpuLineGraph() {
           labels: timeXAxis,
           datasets: bytesYAxis,
         }}
-        height={400}
-        width={600}
+        height={300}
+        width={500}
         options={{
+          plugins: {
+            title: {
+              display: true,
+              text: 'Toggled CPU',
+            },
+          },
           maintainAspectRatio: false,
           scales: {
             yAxis: {
