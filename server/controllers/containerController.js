@@ -8,7 +8,7 @@ const containerController = {};
 
 // This is the exec call to get the container info.
 containerController.getContainers = async (req, res, next) => {
-  console.log('Running getContainers2 middleware...');
+  console.log('Running getContainers middleware...');
   const containerInfo = [];
 
   let rawData = await awaitExec(`docker ps --all --quiet`);
@@ -54,7 +54,7 @@ containerController.getContainers = async (req, res, next) => {
 
     // console.log(output);
   }
-  console.log(containerInfo);
+  // console.log(containerInfo);
   res.locals.containers = containerInfo;
   return next();
 };

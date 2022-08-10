@@ -7,10 +7,10 @@ const metricsController = {};
 //     try {
 //         //const { id } = req.query;
 //         const stats  = await axios.get(`http://localhost:9101/api/v1.3/containers/docker/`);
-      
+
 //         const userCpu = stats.data.stats[0].cpu.usage.user;
 //         console.log('user cpu', userCpu);
-     
+
 //         const totalCpu = stats.data.stats[0].cpu.usage.total;
 
 //         console.log('total Cpu', totalCpu);
@@ -61,47 +61,45 @@ metricsController.getMemoryData = async (req, res, next) => {
         totalData[dataPairArr[0]] += Number(dataPairArr[1]);
       });
     }
-    console.log('Total data for only docker containers: ', totalData);
+    // console.log('Total data for only docker containers: ', totalData);
 
-    res.locals.data = stats.data.data.result;
+    // res.locals.data = stats.data.data.result;
+    res.locals.data = dockerData;
     next();
   } catch (err) {
-    console.log('metricsController error: getData method');
+    // console.log('metricsController error: getData method');
     return next(err);
   }
 };
 
 metricsController.getCpu = async (req, res, next) => {
   //this is req.body.query = rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100
-    // const q = 'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100';
-    // const int = '15';
-    // const start = res.locals.end - 300;
-    console.log('we are at the cpu metrics middleware.');
-    console.log('start', res.locals.start, 'res.locals.end', res.locals.end);
-    try {
-      const stats = await axios.get(
-        `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`
-       
-      );
+  // const q = 'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100';
+  // const int = '15';
+  // const start = res.locals.end - 300;
+  console.log('we are at the cpu metrics middleware.');
+  console.log('start', res.locals.start, 'res.locals.end', res.locals.end);
+  try {
+    const stats = await axios.get(
+      `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`
+    );
 
-      const cpuArray = [];
+    const cpuArray = [];
 
-      for(let i = 0; i < stats.data.data.result.length; i++){
-        const dataObj = {};
-        dataObj.id = stats.data.data.result[i].metric.id;
-        dataObj.values = stats.data.data.result[i].values;
-        console.log('dataObj', dataObj)
-        cpuArray.push(dataObj);
-        console.log('this is the cpu array', cpuArray);
-
-      }
-      res.locals.data = cpuArray;
-      return next();
-    } catch (err) {
-        console.log('metricsController error: getData method');
-        return next(err);
-      }
-    };
-
+    for (let i = 0; i < stats.data.data.result.length; i++) {
+      const dataObj = {};
+      dataObj.id = stats.data.data.result[i].metric.id;
+      dataObj.values = stats.data.data.result[i].values;
+      console.log('dataObj', dataObj);
+      cpuArray.push(dataObj);
+      console.log('this is the cpu array', cpuArray);
+    }
+    res.locals.data = cpuArray;
+    return next();
+  } catch (err) {
+    console.log('metricsController error: getData method');
+    return next(err);
+  }
+};
 
 module.exports = metricsController;
