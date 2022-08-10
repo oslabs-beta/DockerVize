@@ -3,24 +3,24 @@ const axios = require('axios');
 
 const metricsController = {};
 
-metricsController.getTotalCpu = async (req, res, next) => {
-    try {
-        //const { id } = req.query;
-        const stats  = await axios.get(`http://localhost:9101/api/v1.3/containers/docker/`);
+// metricsController.getTotalCpu = async (req, res, next) => {
+//     try {
+//         //const { id } = req.query;
+//         const stats  = await axios.get(`http://localhost:9101/api/v1.3/containers/docker/`);
       
-        const userCpu = stats.data.stats[0].cpu.usage.user;
-        console.log('user cpu', userCpu);
+//         const userCpu = stats.data.stats[0].cpu.usage.user;
+//         console.log('user cpu', userCpu);
      
-        const totalCpu = stats.data.stats[0].cpu.usage.total;
+//         const totalCpu = stats.data.stats[0].cpu.usage.total;
 
-        console.log('total Cpu', totalCpu);
-        const cpuPercentage = Math.round((userCpu / totalCpu) * 100);
-        console.log('this is the user percentage of the cpu', cpuPercentage);
+//         console.log('total Cpu', totalCpu);
+//         const cpuPercentage = Math.round((userCpu / totalCpu) * 100);
+//         console.log('this is the user percentage of the cpu', cpuPercentage);
 
-    } catch(err) {
-        console.log(`${err}`);
-    }
-}
+//     } catch(err) {
+//         console.log(`${err}`);
+//     }
+// }
 metricsController.convertToUnixTime = (req, res, next) => {
   try {
     let currentTime = new Date().valueOf();
@@ -35,7 +35,7 @@ metricsController.convertToUnixTime = (req, res, next) => {
   }
 };
 
-metricsController.getData = async (req, res, next) => {
+metricsController.getMemoryData = async (req, res, next) => {
   try {
     const stats = await axios.get(
       `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`
@@ -70,5 +70,38 @@ metricsController.getData = async (req, res, next) => {
     return next(err);
   }
 };
+
+metricsController.getCpu = async (req, res, next) => {
+  //this is req.body.query = rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100
+    // const q = 'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100';
+    // const int = '15';
+    // const start = res.locals.end - 300;
+    console.log('we are at the cpu metrics middleware.');
+    console.log('start', res.locals.start, 'res.locals.end', res.locals.end);
+    try {
+      const stats = await axios.get(
+        `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`
+       
+      );
+
+      const cpuArray = [];
+
+      for(let i = 0; i < stats.data.data.result.length; i++){
+        const dataObj = {};
+        dataObj.id = stats.data.data.result[i].metric.id;
+        dataObj.values = stats.data.data.result[i].values;
+        console.log('dataObj', dataObj)
+        cpuArray.push(dataObj);
+        console.log('this is the cpu array', cpuArray);
+
+      }
+      res.locals.data = cpuArray;
+      return next();
+    } catch (err) {
+        console.log('metricsController error: getData method');
+        return next(err);
+      }
+    };
+
 
 module.exports = metricsController;
