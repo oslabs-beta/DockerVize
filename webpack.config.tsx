@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    assetModuleFilename: '',
   },
   module: {
     rules: [
@@ -30,14 +31,7 @@ module.exports = {
       },
       {
         test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png',
-            },
-          },
-        ],
+        type: 'asset/resource',
       },
       {
         test: /\.(ts|tsx)$/,
