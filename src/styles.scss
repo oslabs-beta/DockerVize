@@ -4,15 +4,136 @@ $bg: black;
 * {
   margin: 0px;
   padding: 0;
-  background-color: #ebf5ee;
+  background-color: white;
   font-family: 'Raleway', sans-serif;
 }
 
 h1 {
   color: $primary-color;
-  background-color: $bg;
+  background-color: transparent;
+  color: white;
+  flex-direction: column;
+  align-content: center;
+  font-size: 50px;
 }
 
+
+.docker-container {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 20px;
+  // background-color: #11c1e0;
+}
+
+.metrics-container {
+  display: flex;
+  // justify-content: space-between;
+  align-items: center;
+  margin: 50px 20px;
+  // border: 1px black solid;
+}
+
+.container {
+  display: flex;
+  border: 2px solid #819EF0;
+  border-radius: 15px;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.btns {
+  display: flex;
+}
+
+.ea-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.header-container {
+  margin-bottom: 20px;
+  // border: 1px solid #4A73E8; 
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  background: linear-gradient(rgba(19, 119, 234, 0.964), lightblue);
+}
+
+.header-container img {
+  margin-left: 20px;
+  margin-right: 10px;
+  height: 150px;
+  width: 150px;
+  background-color: transparent;
+}
+
+.header-component {
+  background-color: transparent;
+  // font-weight: 200;
+  
+}
+
+//Quit Button
+.header-component button {
+  border-radius: 5px;
+  padding: 0.8em 1.8em;
+  border: 2px solid #252CB0;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 17px;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: inherit;
+  color: #252CB0;
+}
+
+.header-component button::before {
+  content: '';
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #252CB0;
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.header-component button:hover::before {
+  width: 105%;
+}
+
+.header-component button:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.header-component button:active {
+  filter: brightness(1.2);
+}
+
+.containers {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+//Toggle buttons
 .form-switch {
   display: inline-block;
   cursor: pointer;
@@ -49,7 +170,7 @@ h1 {
   left: 0;
   width: 22px;
   height: 22px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 11px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
   transform: translate3d(2px, 2px, 0);
@@ -71,7 +192,7 @@ h1 {
 
 .form-switch input:checked + i {
   // background-color: #4bd763;
-  background-color: #11c1e0;
+  background-color: #4A73E8;
 }
 
 .form-switch input:checked + i::before {
@@ -80,103 +201,4 @@ h1 {
 
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
-}
-
-.docker-container {
-  width: 30%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 60px 20px;
-  // background-color: #11c1e0;
-}
-
-.metrics-container {
-  display: flex;
-
-  align-items: center;
-  margin: 60px 20px;
-}
-
-.container {
-  display: flex;
-  border: 2px solid rgba(17, 193, 224, 0.4);
-  border-radius: 15px;
-  width: 80%;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-.btns {
-  display: flex;
-}
-
-.ea-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: 20px;
-}
-
-.header-container {
-  height: 50px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(17, 193, 224, 0.15); // background-color: #99e1d9;
-}
-
-.header-component {
-  // background-color: #99e1d9;
-}
-
-//Quit Button
-.header-component button {
-  margin-top: 20px;
-  border-radius: 5px;
-  padding: 0.8em 1.8em;
-  border: 2px solid #11c1e0;
-  position: relative;
-  overflow: hidden;
-  background-color: transparent;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 16px;
-  transition: 0.3s;
-  z-index: 1;
-  font-family: inherit;
-  color: #11c1e0;
-}
-
-.header-component button::before {
-  content: '';
-  width: 0;
-  height: 300%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: #11c1e0;
-  transition: 0.5s ease;
-  display: block;
-  z-index: -1;
-}
-
-.header-component button:hover::before {
-  width: 105%;
-}
-
-.header-component button:hover {
-  color: #111;
-}
-
-.header-component button:active {
-  filter: brightness(0.8);
-}
-
-.containers {
-  display: flex;
-  height: 100%;
 }

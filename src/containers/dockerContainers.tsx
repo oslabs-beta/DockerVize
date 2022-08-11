@@ -14,7 +14,7 @@ const DockerContainers: React.FC = () => {
   if (data) dispatch(getContainerStates(data));
 
   return (
-    <div className='docker-container'>
+    <div className='docker-container' >
       <div>Docker Containers</div>
       {error ? (
         <>Oh no, there was an error</>

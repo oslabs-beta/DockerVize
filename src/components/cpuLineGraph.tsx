@@ -40,7 +40,12 @@ export default function cpuLineGraph() {
     let resultObj = {
       label: name,
       data: data,
+      pointBackgroundColor: ['black'],
+      pointBorderColor : ['black'],
+      pointRadius: 2,
+      fill: false,
       backgroundColor: [
+        //Background color for boxes above chart - ex: /cadvisor
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
         'rgba(255, 206, 86, 0.2)',
@@ -49,6 +54,7 @@ export default function cpuLineGraph() {
         'rgba(255, 159, 64, 0.2)',
       ],
       borderColor: [
+        //Line colors
         'rgba(255, 99, 132, 1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
@@ -96,7 +102,7 @@ export default function cpuLineGraph() {
             yAxis: {
               title: {
                 display: true,
-                text: 'CPU Percentage',
+                text: 'CPU %',
               },
             },
           },
