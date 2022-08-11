@@ -40,6 +40,10 @@ export default function memoryLineGraph() {
     let resultObj = {
       label: name,
       data: data,
+      pointBackgroundColor: ['black'],
+      pointBorderColor : ['black'],
+      pointRadius: 2,
+      fill: false,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
