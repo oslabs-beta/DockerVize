@@ -87,12 +87,16 @@ metricsController.getCpu = async (req, res, next) => {
     const cpuArray = [];
 
     for (let i = 0; i < stats.data.data.result.length; i++) {
-      const dataObj = {};
-      dataObj.id = stats.data.data.result[i].metric.id;
-      dataObj.values = stats.data.data.result[i].values;
-      console.log('dataObj', dataObj);
-      cpuArray.push(dataObj);
-      console.log('this is the cpu array', cpuArray);
+      if (
+        stats.data.data.result[i]['metric']['id'].slice() !== '/docker/buildx'
+      ) {
+        const dataObj = {};
+        dataObj.id = stats.data.data.result[i].metric.id;
+        dataObj.values = stats.data.data.result[i].values;
+        console.log('dataObj', dataObj);
+        cpuArray.push(dataObj);
+        console.log('this is the cpu array', cpuArray);
+      }
     }
     res.locals.data = cpuArray;
     return next();

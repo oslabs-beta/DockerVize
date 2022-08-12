@@ -1,6 +1,6 @@
 import React from 'react';
-import { ObjectElement } from '../types';
-import { useDispatch } from 'react-redux';
+import { ObjectElement, AllStates } from '../types';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   toggleStatus,
   toggleData,
@@ -18,14 +18,22 @@ const Container: React.FC<ObjectElement> = (props) => {
   const { name, state, id } = props;
 
   const dispatch = useDispatch();
-
-  // let { data } = useGetMemoryDataQuery(undefined, { pollingInterval: 3000 });
   let { data } = useGetMemoryDataQuery();
 
   let cpuData = useGetCPUDataQuery().data;
 
-  if (cpuData) {
-    console.log('cpu:', cpuData[0].id);
+  // if (cpuData) {
+  //   console.log('cpu:', cpuData[0].id);
+  // }
+
+  //Get actual state
+  //check if dataState for this id is true
+  //If true, set interval to query data again
+  const trueState: any = useSelector((state: AllStates) => state);
+  // console.log('trueState: ', trueState['statusToggle'][id]);
+  if (trueState['statusToggle'][id]['dataState']) {
+    // let { data } = useGetMemoryDataQuery();
+    // console.log(trueState['statusToggle'][id].memoryState[0]);
   }
 
   const updateMemoryState = (id: string) => {

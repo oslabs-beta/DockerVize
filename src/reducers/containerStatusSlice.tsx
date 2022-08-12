@@ -1,25 +1,5 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
-import { ContainerResponse, MemoryElement } from '../types';
-
-//Types for getting container states
-// interface ArrayOfObj {
-//   name: string;
-//   id: string;
-//   memoryData: [string, string][];
-// }
-
-interface OneState {
-  name: string;
-  statusState: boolean;
-  dataState: boolean;
-  memoryState: [][];
-  cpuState: [][];
-}
-export interface AllStates {
-  [id: string]: OneState;
-}
-
-//Types for getting memory states
+import { ContainerResponse, MemoryElement, AllStates } from '../types';
 
 const initialState: AllStates = {};
 
