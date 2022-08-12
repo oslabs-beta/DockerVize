@@ -30,7 +30,7 @@ export default function cpuLineGraph() {
     for (const index in timeValues) {
       let convertedTime = new Date(
         timeValues[index][0] * 1000
-      ).toLocaleTimeString();
+      ).toLocaleTimeString('en-US', { hour12: false });
       timeXAxis.push(convertedTime);
     }
 
@@ -40,7 +40,7 @@ export default function cpuLineGraph() {
         data: data,
         pointBackgroundColor: ['black'],
         pointBorderColor: ['black'],
-        pointRadius: 2,
+        pointRadius: 0,
         fill: false,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -84,6 +84,9 @@ export default function cpuLineGraph() {
         cpuYAxis.push(obj);
       }
     }
+
+    console.log('time axis: ', timeXAxis);
+    console.log('data axis: ', cpuYAxis);
   }
 
   return (
@@ -108,6 +111,16 @@ export default function cpuLineGraph() {
               title: {
                 display: true,
                 text: 'CPU %',
+              },
+            },
+            xAxis: {
+              title: {
+                display: true,
+                text: 'Time (24hr)',
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 10,
               },
             },
           },
