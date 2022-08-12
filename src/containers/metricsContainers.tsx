@@ -17,9 +17,9 @@ const MetricsContainers: React.FC = () => {
     <div className='metrics-container'>
       <div></div>
       {error ? (
-        <>Oh no, there was an error</>
+        <>Metrics error!!</>
       ) : isLoading ? (
-        <>Loading...</>
+        <>Metrics Loading...</>
       ) : data ? (
         <>
           <CpuLineGraph />

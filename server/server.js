@@ -18,6 +18,7 @@ app.use(cors());
 
 //serve static files
 app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../src/assets')));
 
 //to avoid axios CORS errors IN development
 // app.use(function (req, res, next) {
