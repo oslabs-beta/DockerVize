@@ -77,8 +77,8 @@ metricsController.getCpu = async (req, res, next) => {
   // const q = 'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100';
   // const int = '15';
   // const start = res.locals.end - 300;
-  console.log('we are at the cpu metrics middleware.');
-  console.log('start', res.locals.start, 'res.locals.end', res.locals.end);
+  // console.log('we are at the cpu metrics middleware.');
+  // console.log('start', res.locals.start, 'res.locals.end', res.locals.end);
   try {
     const stats = await axios.get(
       `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`
@@ -88,14 +88,16 @@ metricsController.getCpu = async (req, res, next) => {
 
     for (let i = 0; i < stats.data.data.result.length; i++) {
       if (
-        stats.data.data.result[i]['metric']['id'].slice() !== '/docker/buildx'
+        stats.data.data.result[i]['metric']['id'].slice() !==
+          '/docker/buildx' &&
+        stats.data.data.result[i]['metric']['id'] !== '/docker'
       ) {
         const dataObj = {};
         dataObj.id = stats.data.data.result[i].metric.id;
         dataObj.values = stats.data.data.result[i].values;
-        console.log('dataObj', dataObj);
+        // console.log('dataObj', dataObj);
         cpuArray.push(dataObj);
-        console.log('this is the cpu array', cpuArray);
+        // console.log('this is the cpu array', cpuArray);
       }
     }
     res.locals.data = cpuArray;
