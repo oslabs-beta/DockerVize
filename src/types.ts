@@ -21,3 +21,19 @@ export interface MemoryElement {
 }
 
 export type MemoryDataResponse = MemoryElement[];
+
+export interface OneState {
+  name: string;
+  statusState: boolean;
+  dataState: boolean;
+  memoryState: [][];
+  cpuState: [][];
+}
+export interface AllStates {
+  [id: string]: OneState;
+}
+
+export interface useSelectorState {
+  containerAPI: any;
+  statusToggle: AllStates;
+}

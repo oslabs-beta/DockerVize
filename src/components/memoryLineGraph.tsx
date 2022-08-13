@@ -4,7 +4,8 @@ import { Line } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 Chart.register(CategoryScale);
 import { useSelector } from 'react-redux';
-import { AllStates } from '../reducers/containerStatusSlice';
+import { AllStates } from '../types';
+import { useGetMemoryDataQuery } from '../services/containerQuery';
 
 interface ChartObject {
   label: string;
@@ -18,64 +19,64 @@ export default function memoryLineGraph() {
   const state = useSelector((state: AllStates) => state);
 
   let timeXAxis = [];
-
-  const values = Object.values(state.statusToggle);
-
-  for (let i = 0; i < values.length; i++) {
-    if (values[i].memoryState[0] === undefined) continue;
-    else {
-      for (let j = 0; j < values[i].memoryState.length; j++) {
-        let convertedTime = new Date(
-          values[i].memoryState[j][0] * 1000
-        ).toLocaleTimeString();
-        timeXAxis.push(convertedTime);
-      }
-      break;
-    }
-  }
-
   let bytesYAxis: ChartObject[] = [];
 
-  const buildYAxis = (name: string, data: String[]) => {
-    let resultObj = {
-      label: name,
-      data: data,
-      pointBackgroundColor: ['black'],
-      pointBorderColor : ['black'],
-      pointRadius: 2,
-      fill: false,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-      yAxisID: 'yAxis',
+  let data = useGetMemoryDataQuery(undefined, { pollingInterval: 1000 });
+  if (data && data.data) {
+    const timeValues: any = data.data[0]['values'];
+    for (const index in timeValues) {
+      let convertedTime = new Date(
+        timeValues[index][0] * 1000
+      ).toLocaleTimeString('en-US', { hour12: false });
+      timeXAxis.push(convertedTime);
+    }
+
+    const buildYAxis = (name: string, data: Number[]) => {
+      let resultObj = {
+        label: name,
+        data: data,
+        pointBackgroundColor: ['black'],
+        pointBorderColor: ['black'],
+        pointRadius: 0,
+        fill: false,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+        yAxisID: 'yAxis',
+      };
+      return resultObj;
     };
-    return resultObj;
-  };
 
-  for (let i = 0; i < values.length; i++) {
-    if (values[i].memoryState[0] === undefined) continue;
-    else {
-      let subData = [];
-      for (let j = 0; j < values[i].memoryState.length; j++) {
-        subData.push(String(values[i].memoryState[j][1] / 1000000));
+    for (let i = 0; i < data.data.length; i++) {
+      const currentState: any = state.statusToggle;
+      let id = data.data[i].metric.id.slice(8, 20);
+
+      if (currentState[id].dataState) {
+        let name = currentState[id].name;
+
+        let memoryData: any = [];
+        for (let j = 0; j < data.data[i].values.length; j++) {
+          let dataValues: any = data.data[i].values[j];
+          memoryData.push(Number(dataValues[1] / 1000000));
+        }
+        let obj: any = buildYAxis(name, memoryData);
+
+        bytesYAxis.push(obj);
       }
-
-      let obj: ChartObject = buildYAxis(values[i].name, subData);
-      bytesYAxis.push(obj);
     }
   }
 
@@ -86,13 +87,13 @@ export default function memoryLineGraph() {
           labels: timeXAxis,
           datasets: bytesYAxis,
         }}
-        height={300}
+        height={400}
         width={500}
         options={{
           plugins: {
             title: {
               display: true,
-              text: 'Toggled Memory',
+              text: 'Container Memory Usage',
             },
           },
           maintainAspectRatio: false,
@@ -101,6 +102,20 @@ export default function memoryLineGraph() {
               title: {
                 display: true,
                 text: 'megabytes',
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 8,
+              },
+            },
+            xAxis: {
+              title: {
+                display: true,
+                text: 'Time (24hr)',
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 10,
               },
             },
           },
