@@ -23,6 +23,31 @@ containerRouter.post('/stop',
   }
 );
 
+containerRouter.post('/start',
+  containerController.startOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+  }
+)
+
+
+
+containerRouter.post('/pause', 
+  containerController.pauseOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+
+  }
+);
+
+containerRouter.post('/unpause', 
+  containerController.unpauseOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+
+  }
+);
+
 
 containerRouter.get(
   '/',

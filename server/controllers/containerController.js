@@ -103,17 +103,109 @@ containerController.checkContainers = async (req, res, next) => {
 }
 
 containerController.stopContainers = async (req, res, next) => {
-  exec('docker stop prometheus docker stop cadvisor');
-  console.log('stopping prom and cadvisor')
-  res.locals.message = 'Cadvisor and prometheus containers have stopped'
-  return next();
+  exec('docker stop prometheus docker stop cadvisor', (error, stdout, stderr) => {
+    if (error || stderr){
+      const errorLog = error || stderr;
+      const err = {
+        log: `Error processing stop call to the prometheus and cadvisor containers.${errorLog}`,
+        status: 405,
+        message: 'Unable to stop the prometheus and cadvisor containers'
+      }
+      return next(err);
+    }
+    else {
+      res.locals.message = 'Cadvisor and prometheus containers have stopped'
+      return next();
+
+    }
+  
+});
 }
 
 containerController.stopOne = async (req, res, next) => {
   const { name } = req.body;
-  exec(`docker stop ${name}`)
-  res.locals.message = 'Stopping Container'
-  return next();
+  exec(`docker stop ${name}`, (error, stdout, stderr) => {
+    if (error || stderr){
+      const errorLog = error || stderr;
+      const err = {
+        log: `Error processing stop call to the container.${errorLog}`,
+        status: 405,
+        message: 'Unable to stop the container.'
+      }
+      return next(err);
+    }
+    else {
+      res.locals.message = 'Container has stopped'
+      return next();
+
+    }
+  
+});
 }
 
-module.exports = containerController;
+containerController.startOne = async (req, res, next) => {
+  const { name } = req.body;
+  exec(`docker start ${name}`, (error, stdout, stderr) => {
+    if (error || stderr){
+      const errorLog = error || stderr;
+      const err = {
+        log: `Error processing start call to the container.${errorLog}`,
+        status: 405,
+        message: 'Unable to start the container.'
+      }
+      return next(err);
+    }
+    else {
+      res.locals.message = 'Starting container.'
+      return next();
+
+    }
+  
+})
+ 
+}
+
+containerController.pauseOne = async (req, res, next) => {
+  const { name } = req.body;
+  exec(`docker pause ${name}`, (error, stdout, stderr) => {
+    if (error || stderr){
+      const errorLog = error || stderr;
+      const err = {
+        log: `Error processing pause call to the container.${errorLog}`,
+        status: 405,
+        message: 'Unable to pause the container.'
+      }
+      return next(err);
+    }
+    else {
+      res.locals.message = 'Container has paused'
+      return next();
+
+    }
+  
+})
+}
+
+containerController.unpauseOne = async (req, res, next) => {
+  const { name } = req.body;
+  exec(`docker unpause ${name}`, (error, stdout, stderr) => {
+    if (error || stderr){
+      const errorLog = error || stderr;
+      const err = {
+        log: `Error processing unpause call to the container.${errorLog}`,
+        status: 405,
+        message: 'Unable to unpause the container.'
+      }
+      return next(err);
+    }
+    else {
+      res.locals.message = 'Container has paused'
+      return next();
+
+    }
+  
+})
+}
+
+
+module.exports = containerController
