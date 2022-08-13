@@ -14,14 +14,25 @@ const DockerContainers: React.FC = () => {
   if (data) dispatch(getContainerStates(data));
 
   return (
-    <div className='docker-container' >
-      <div>Docker Containers</div>
+    <div className='docker-container'>
       {error ? (
-        <>Oh no, there was an error</>
+        <>
+          <p>Error: Could not connect to Docker.</p>
+          <br />
+          <ol>
+            <li>Open and log into Docker Desktop application.</li>
+            <li>
+              Configure shared paths in Docker Desktop (Settings &gt; Resources
+              &gt; File Sharing) to include the prometheus.yaml file path
+              (dockervize &gt; server &gt; assets)
+            </li>
+          </ol>
+        </>
       ) : isLoading ? (
         <>Loading...</>
       ) : data ? (
         <>
+          <div>Docker Containers</div>
           {data.map((container: ObjectElement) => {
             return (
               <Container
