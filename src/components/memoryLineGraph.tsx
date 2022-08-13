@@ -87,13 +87,13 @@ export default function memoryLineGraph() {
           labels: timeXAxis,
           datasets: bytesYAxis,
         }}
-        height={300}
+        height={400}
         width={500}
         options={{
           plugins: {
             title: {
               display: true,
-              text: 'Toggled Memory',
+              text: 'Container Memory Usage',
             },
           },
           maintainAspectRatio: false,
@@ -102,6 +102,10 @@ export default function memoryLineGraph() {
               title: {
                 display: true,
                 text: 'megabytes',
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 8,
               },
             },
             xAxis: {

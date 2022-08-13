@@ -84,9 +84,6 @@ export default function cpuLineGraph() {
         cpuYAxis.push(obj);
       }
     }
-
-    console.log('time axis: ', timeXAxis);
-    console.log('data axis: ', cpuYAxis);
   }
 
   return (
@@ -96,13 +93,13 @@ export default function cpuLineGraph() {
           labels: timeXAxis,
           datasets: cpuYAxis,
         }}
-        height={300}
+        height={400}
         width={500}
         options={{
           plugins: {
             title: {
               display: true,
-              text: 'Toggled CPU',
+              text: 'Container CPU Usage',
             },
           },
           maintainAspectRatio: false,
@@ -111,6 +108,10 @@ export default function cpuLineGraph() {
               title: {
                 display: true,
                 text: 'CPU %',
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 8,
               },
             },
             xAxis: {
