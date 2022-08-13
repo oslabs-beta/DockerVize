@@ -16,7 +16,7 @@ export const containerAPI = createApi({
         body: {
           query: 'container_memory_usage_bytes',
           secondsPassed: 90,
-          interval: 15,
+          interval: 1,
         },
       }),
     }),
@@ -28,7 +28,7 @@ export const containerAPI = createApi({
           query:
             'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100',
           secondsPassed: 90,
-          interval: 15,
+          interval: 1,
         },
       }),
     }),
