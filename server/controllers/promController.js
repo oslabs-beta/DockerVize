@@ -5,6 +5,7 @@ const path = require('path');
 
 const promController = {};
 
+//Start running the prom controller if it exists.
 promController.restartProm = async (req, res, next) => {
   console.log('trying to start prometheus')
       exec ('docker start prometheus', (error, stdout, stderr) => {
@@ -13,9 +14,6 @@ promController.restartProm = async (req, res, next) => {
         return next();
       }
       else {
-       console.log('reg error', error);
-       console.log('stdout', stdout);
-       console.log('stderr', stderr);
         return next ();
       }
       
@@ -24,7 +22,8 @@ promController.restartProm = async (req, res, next) => {
     
 }
 
-
+//Build and start prom container if it doesn't exist. If res.locals.promRunning equals yes then the container
+//is already built and running.
 promController.startProm = async (req, res, next) => {  
     if (res.locals.promRunning === 'yes') return next();
     else {

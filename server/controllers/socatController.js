@@ -5,7 +5,7 @@ const axios = require('axios');
 const path = require('path');
 
 const socatController ={};
-
+//This controller has been deprecated. We are no longer using socat in this project.
 socatController.startSocat = async (req, res, next) => {
     console.log('We are at the startSocat middleware (SECOND)');
     try {
@@ -19,7 +19,6 @@ socatController.startSocat = async (req, res, next) => {
       return next(err);
     }
   };
-  // console.log(typeof socatController.startSocat);
   
   socatController.checkSocat = async (req, res, next) => {
     let counter = 0;

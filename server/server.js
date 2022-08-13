@@ -20,19 +20,7 @@ app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../dist')));
 app.use(express.static(path.resolve(__dirname, '../src/assets')));
 
-//to avoid axios CORS errors IN development
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-//   res.header('Access-Control-Allow-Methods', '*');
-
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   );
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
-
+//Routes to /containter and /metrics endpoints
 app.use('/container', containerRouter);
 app.use('/metrics', metricsRouter);
 
@@ -53,6 +41,7 @@ app.use((err, req, res, next) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
+//listen on port 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
