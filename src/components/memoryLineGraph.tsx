@@ -87,8 +87,8 @@ export default function memoryLineGraph() {
           labels: timeXAxis,
           datasets: bytesYAxis,
         }}
-        height={400}
-        width={500}
+        height={350}
+        width={450}
         options={{
           plugins: {
             title: {

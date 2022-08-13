@@ -17,7 +17,6 @@ h1 {
   font-size: 50px;
 }
 
-
 .docker-container {
   width: 30%;
   height: 100%;
@@ -38,7 +37,7 @@ h1 {
 
 .container {
   display: flex;
-  border: 2px solid #819EF0;
+  border: 2px solid #819ef0;
   border-radius: 15px;
   width: 80%;
   justify-content: space-between;
@@ -61,7 +60,7 @@ h1 {
 
 .header-container {
   margin-bottom: 20px;
-  // border: 1px solid #4A73E8; 
+  // border: 1px solid #4A73E8;
   display: flex;
   justify-content: space-around;
   width: 100%;
@@ -80,14 +79,13 @@ h1 {
 .header-component {
   background-color: transparent;
   // font-weight: 200;
-  
 }
 
 //Quit Button
 .header-component button {
   border-radius: 5px;
   padding: 0.8em 1.8em;
-  border: 2px solid #252CB0;
+  border: 2px solid #252cb0;
   position: relative;
   overflow: hidden;
   background-color: transparent;
@@ -97,7 +95,7 @@ h1 {
   transition: 0.3s;
   z-index: 1;
   font-family: inherit;
-  color: #252CB0;
+  color: #252cb0;
 }
 
 .header-component button::before {
@@ -108,7 +106,7 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(45deg);
-  background: #252CB0;
+  background: #252cb0;
   transition: 0.5s ease;
   display: block;
   z-index: -1;
@@ -192,7 +190,7 @@ h1 {
 
 .form-switch input:checked + i {
   // background-color: #4bd763;
-  background-color: #4A73E8;
+  background-color: #4a73e8;
 }
 
 .form-switch input:checked + i::before {
@@ -201,4 +199,14 @@ h1 {
 
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
+}
+
+.inner-metrics-container {
+  display: flex;
+}
+
+.left-metrics,
+.right-metrics {
+  display: flex;
+  flex-direction: column;
 }

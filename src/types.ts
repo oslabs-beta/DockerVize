@@ -26,8 +26,6 @@ export interface OneState {
   name: string;
   statusState: boolean;
   dataState: boolean;
-  memoryState: [][];
-  cpuState: [][];
 }
 export interface AllStates {
   [id: string]: OneState;

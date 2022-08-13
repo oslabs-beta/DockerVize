@@ -17,7 +17,6 @@ interface ChartObject {
 
 export default function cpuLineGraph() {
   const state = useSelector((state: AllStates) => state);
-  // console.log('state:', state);
 
   let timeXAxis: string[] = [];
   let cpuYAxis: ChartObject[] = [];
@@ -93,8 +92,8 @@ export default function cpuLineGraph() {
           labels: timeXAxis,
           datasets: cpuYAxis,
         }}
-        height={400}
-        width={500}
+        height={350}
+        width={450}
         options={{
           plugins: {
             title: {

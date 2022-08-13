@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { getContainerStates } from '../reducers/containerStatusSlice';
 import MemoryLineGraph from '../components/memoryLineGraph';
 import CpuLineGraph from '../components/cpuLineGraph';
+import MemoryTotalGraph from '../components/memoryTotalGraph';
+import CpuTotalGraph from '../components/cpuTotalGraph';
 
 const MetricsContainers: React.FC = () => {
   const { data, error, isLoading } = useGetContainersQuery();
@@ -15,17 +17,23 @@ const MetricsContainers: React.FC = () => {
 
   return (
     <div className='metrics-container'>
-      <div></div>
       {error ? (
-        <>Metrics error!!</>
+        <></>
       ) : isLoading ? (
         <>Metrics Loading...</>
       ) : data ? (
-        <>
-          <CpuLineGraph />
-          <div style={{ height: '20px', width: '20px' }}></div>
-          <MemoryLineGraph />
-        </>
+        <div className='inner-metrics-container'>
+          <div className='left-metrics'>
+            <CpuLineGraph />
+            <div style={{ height: '20px', width: '20px' }}></div>
+            <CpuTotalGraph />
+          </div>
+
+          <div className='right-metrics'>
+            <MemoryLineGraph />
+            <MemoryTotalGraph />
+          </div>
+        </div>
       ) : null}
     </div>
   );
