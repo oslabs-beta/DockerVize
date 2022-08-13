@@ -4,21 +4,59 @@ const express = require('express');
 const containerRouter = express.Router();
 const path = require('path');
 const containerController = require('../controllers/containerController');
-//const promContainerController = require('../controllers/promMetrics');
+const promController = require('../controllers/promController');
 const cadvisorController = require('../controllers/cadvisorController');
+
+containerRouter.get('/exit', 
+  containerController.stopContainers,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+
+  }
+);
+
+containerRouter.post('/stop', 
+  containerController.stopOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+
+  }
+);
+
+containerRouter.post('/start',
+  containerController.startOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+  }
+)
+
+
+
+containerRouter.post('/pause', 
+  containerController.pauseOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+
+  }
+);
+
+containerRouter.post('/unpause', 
+  containerController.unpauseOne,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+
+  }
+);
+
 
 containerRouter.get(
   '/',
-  //console.log('We are at the container router'),
-  //containerController.middlewareCheck,
-  // console.log(typeof containerController.startSocat),
-  // cadvisorController.restartCadvisor,
 
-  containerController.startProm,
-  // containerController.startSocat,
-  // containerController.checkSocat,
+  promController.restartProm,
+  promController.startProm,
+  cadvisorController.restartCadvisor,
   cadvisorController.startCadvisor,
-  // containerController.getContainersSocat,
+  containerController.checkContainers,
   containerController.getContainers,
 
   (req, res) => {
