@@ -7,47 +7,25 @@ const containerController = require('../controllers/containerController');
 const promController = require('../controllers/promController');
 const cadvisorController = require('../controllers/cadvisorController');
 
-containerRouter.get('/exit', 
-  containerController.stopContainers,
-  (req, res) => {
-    return res.status(200).send(res.locals.message);
+containerRouter.get('/exit', containerController.stopContainers, (req, res) => {
+  return res.status(200).send(res.locals.message);
+});
 
-  }
-);
+containerRouter.post('/stop', containerController.stopOne, (req, res) => {
+  return res.status(200).send(res.locals.message);
+});
 
-containerRouter.post('/stop', 
-  containerController.stopOne,
-  (req, res) => {
-    return res.status(200).send(res.locals.message);
+containerRouter.post('/start', containerController.startOne, (req, res) => {
+  return res.status(200).send(res.locals.message);
+});
 
-  }
-);
+containerRouter.post('/pause', containerController.pauseOne, (req, res) => {
+  return res.status(200).send(res.locals.message);
+});
 
-containerRouter.post('/start',
-  containerController.startOne,
-  (req, res) => {
-    return res.status(200).send(res.locals.message);
-  }
-)
-
-
-
-containerRouter.post('/pause', 
-  containerController.pauseOne,
-  (req, res) => {
-    return res.status(200).send(res.locals.message);
-
-  }
-);
-
-containerRouter.post('/unpause', 
-  containerController.unpauseOne,
-  (req, res) => {
-    return res.status(200).send(res.locals.message);
-
-  }
-);
-
+containerRouter.post('/unpause', containerController.unpauseOne, (req, res) => {
+  return res.status(200).send(res.locals.message);
+});
 
 containerRouter.get(
   '/',

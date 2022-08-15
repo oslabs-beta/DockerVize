@@ -22,7 +22,7 @@ export default function cpuLineGraph() {
   let cpuYAxis: ChartObject[] = [];
 
   let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
-  console.log('data: ', data.data);
+  // console.log('data: ', data.data);
 
   if (data && data.data) {
     const timeValues: any = data.data[0]['values'];

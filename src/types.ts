@@ -24,7 +24,7 @@ export type MemoryDataResponse = MemoryElement[];
 
 export interface OneState {
   name: string;
-  statusState: boolean;
+  statusState: string;
   dataState: boolean;
 }
 export interface AllStates {

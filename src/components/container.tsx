@@ -8,6 +8,23 @@ const Container: React.FC<ObjectElement> = (props) => {
 
   const dispatch = useDispatch();
 
+  // var e = (document.getElementById("organization")) as HTMLSelectElement;
+  // var sel = e.selectedIndex;
+  // var opt = e.options[sel];
+  // var CurValue = (<HTMLSelectElement>opt).value;
+  // var CurText = (<HTMLSelectElement>opt).text;
+
+  const updateContainerStatus = (id: string) => {
+    const select = document.getElementById(
+      `dropdown${id}`
+    ) as HTMLSelectElement;
+    const output = select.value;
+    console.log('Dropdown Value: ', output);
+    //Send query using output and name
+    //Endpoints: start stop pause unpause
+    return output;
+  };
+
   return (
     <div className='container'>
       <div>
@@ -15,21 +32,42 @@ const Container: React.FC<ObjectElement> = (props) => {
       </div>
       <div className='btns'>
         <div className='ea-btn'>
-          <div className='toggleText'>On/Off</div>
-          <label
-            className='form-switch'
-            id={`onButton${id}`}
+          <div className='toggleText'>Status</div>
+          <select
+            id={`dropdown${id}`}
             onChange={() => {
-              dispatch(toggleStatus(id));
+              updateContainerStatus(id);
+              dispatch(
+                toggleStatus({
+                  id: id,
+                  name: name,
+                  state: updateContainerStatus(id),
+                })
+              );
             }}
           >
             {state === 'running' ? (
-              <input type='checkbox' defaultChecked></input>
+              <option value='running' selected>
+                Running
+              </option>
             ) : (
-              <input type='checkbox'></input>
+              <option value='running'>Running</option>
             )}
-            <i></i>
-          </label>
+            {state === 'exited' ? (
+              <option value='exited' selected>
+                Exited
+              </option>
+            ) : (
+              <option value='exited'>Exited</option>
+            )}
+            {state === 'paused' ? (
+              <option value='paused' selected>
+                Paused
+              </option>
+            ) : (
+              <option value='paused'>Paused</option>
+            )}
+          </select>
         </div>
         <div className='ea-btn'>
           <div className='toggleText'>Get Data</div>
