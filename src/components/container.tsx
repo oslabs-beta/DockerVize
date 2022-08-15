@@ -79,7 +79,8 @@ const Container: React.FC<ObjectElement> = (props) => {
                 //If previous data state was running and current status state is not running - then dispatch toggle data
                 if (
                   previousContainerStatus === 'running' &&
-                  selectedOption !== 'running'
+                  selectedOption !== 'running' &&
+                  containerStatusToggle[id].dataState
                 ) {
                   dispatch(toggleData(id));
                   console.log([previousContainerStatus, selectedOption]);
@@ -113,6 +114,7 @@ const Container: React.FC<ObjectElement> = (props) => {
                   id={`dataCheckmark${id}`}
                   type='checkbox'
                   disabled
+                  // style={{ border: '1px solid gray' }}
                 ></input>
               </>
             ) : (
