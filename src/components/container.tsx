@@ -1,28 +1,57 @@
 import React from 'react';
 import { ObjectElement } from '../types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleStatus, toggleData } from '../reducers/containerStatusSlice';
+import { AllStates } from '../types';
 
 const Container: React.FC<ObjectElement> = (props) => {
+  //state is a little misleading because it's just the name of a property
   const { name, state, id } = props;
+  //This is the real state
+  const containerState = useSelector((state: AllStates) => state);
+  const containerStatusToggle: any = containerState.statusToggle;
+  let containerStatus = containerStatusToggle[id].statusState;
 
   const dispatch = useDispatch();
-
-  // var e = (document.getElementById("organization")) as HTMLSelectElement;
-  // var sel = e.selectedIndex;
-  // var opt = e.options[sel];
-  // var CurValue = (<HTMLSelectElement>opt).value;
-  // var CurText = (<HTMLSelectElement>opt).text;
 
   const updateContainerStatus = (id: string) => {
     const select = document.getElementById(
       `dropdown${id}`
     ) as HTMLSelectElement;
-    const output = select.value;
-    console.log('Dropdown Value: ', output);
-    //Send query using output and name
-    //Endpoints: start stop pause unpause
-    return output;
+    const selectedOption = select.value;
+    changeContainerStatusInDockerDesktop(name, selectedOption);
+    return selectedOption;
+  };
+
+  const changeContainerStatusInDockerDesktop = (
+    name: string,
+    status: string
+  ) => {
+    const body = { name: name };
+
+    let actionString;
+    if (status === 'paused') {
+      actionString = 'pause';
+    } else if (status === 'exited') {
+      actionString = 'stop';
+    } else if (status === 'running' && containerStatus === 'paused') {
+      actionString = 'unpause';
+    } else {
+      actionString = 'start';
+    }
+
+    let action = actionString;
+
+    fetch(`http://localhost:3000/container/${action}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (action !== 'running') {
+    }
   };
 
   return (
@@ -33,41 +62,39 @@ const Container: React.FC<ObjectElement> = (props) => {
       <div className='btns'>
         <div className='ea-btn'>
           <div className='toggleText'>Status</div>
-          <select
-            id={`dropdown${id}`}
-            onChange={() => {
-              updateContainerStatus(id);
-              dispatch(
-                toggleStatus({
-                  id: id,
-                  name: name,
-                  state: updateContainerStatus(id),
-                })
-              );
-            }}
-          >
-            {state === 'running' ? (
-              <option value='running' selected>
-                Running
-              </option>
-            ) : (
+          {name !== '/cadvisor' && name !== '/prometheus' ? (
+            <select
+              defaultValue={state}
+              id={`dropdown${id}`}
+              onChange={() => {
+                let previousContainerStatus = containerStatus;
+                let selectedOption = updateContainerStatus(id);
+                dispatch(
+                  toggleStatus({
+                    id: id,
+                    name: name,
+                    state: selectedOption,
+                  })
+                );
+                //If previous data state was running and current status state is not running - then dispatch toggle data
+                if (
+                  previousContainerStatus === 'running' &&
+                  selectedOption !== 'running'
+                ) {
+                  dispatch(toggleData(id));
+                  console.log([previousContainerStatus, selectedOption]);
+                }
+              }}
+            >
               <option value='running'>Running</option>
-            )}
-            {state === 'exited' ? (
-              <option value='exited' selected>
-                Exited
-              </option>
-            ) : (
-              <option value='exited'>Exited</option>
-            )}
-            {state === 'paused' ? (
-              <option value='paused' selected>
-                Paused
-              </option>
-            ) : (
               <option value='paused'>Paused</option>
-            )}
-          </select>
+              <option value='exited'>Exited</option>
+            </select>
+          ) : (
+            <>
+              <p>Running</p>
+            </>
+          )}
         </div>
         <div className='ea-btn'>
           <div className='toggleText'>Get Data</div>
@@ -75,12 +102,22 @@ const Container: React.FC<ObjectElement> = (props) => {
             className='form-switch'
             id={`dataButton${id}`}
             onChange={() => {
-              if (state === 'running') {
+              if (containerStatus === 'running') {
                 dispatch(toggleData(id));
               } else console.log('Container not running');
             }}
           >
-            <input id={`dataCheckmark${id}`} type='checkbox'></input>
+            {containerStatus !== 'running' ? (
+              <>
+                <input
+                  id={`dataCheckmark${id}`}
+                  type='checkbox'
+                  disabled
+                ></input>
+              </>
+            ) : (
+              <input id={`dataCheckmark${id}`} type='checkbox'></input>
+            )}
             <i></i>
           </label>
         </div>

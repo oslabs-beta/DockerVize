@@ -35,3 +35,5 @@ export interface useSelectorState {
   containerAPI: any;
   statusToggle: AllStates;
 }
+
+export type PostResponse = string;
