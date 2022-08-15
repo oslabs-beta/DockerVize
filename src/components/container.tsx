@@ -98,8 +98,38 @@ const Container: React.FC<ObjectElement> = (props) => {
           )}
         </div>
         <div className='ea-btn'>
-          <div className='toggleText'>Get Data</div>
-          <label
+          {containerStatus !== 'running' ? (
+            <>
+              <div style={{ marginRight: '63px' }}></div>
+            </>
+          ) : (
+            <>
+              <div className='toggleText'>Get Data</div>
+              <label
+                className='form-switch'
+                id={`dataButton${id}`}
+                onChange={() => {
+                  if (containerStatus === 'running') {
+                    dispatch(toggleData(id));
+                  } else console.log('Container not running');
+                }}
+              >
+                {containerStatus !== 'running' ? (
+                  <>
+                    <input
+                      id={`dataCheckmark${id}`}
+                      type='checkbox'
+                      disabled
+                    ></input>
+                  </>
+                ) : (
+                  <input id={`dataCheckmark${id}`} type='checkbox'></input>
+                )}
+                <i></i>
+              </label>
+            </>
+          )}
+          {/* <label
             className='form-switch'
             id={`dataButton${id}`}
             onChange={() => {
@@ -114,14 +144,13 @@ const Container: React.FC<ObjectElement> = (props) => {
                   id={`dataCheckmark${id}`}
                   type='checkbox'
                   disabled
-                  // style={{ border: '1px solid gray' }}
                 ></input>
               </>
             ) : (
               <input id={`dataCheckmark${id}`} type='checkbox'></input>
             )}
             <i></i>
-          </label>
+          </label> */}
         </div>
       </div>
     </div>
