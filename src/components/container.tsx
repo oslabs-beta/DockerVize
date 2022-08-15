@@ -49,9 +49,6 @@ const Container: React.FC<ObjectElement> = (props) => {
       },
       body: JSON.stringify(body),
     });
-
-    if (action !== 'running') {
-    }
   };
 
   return (

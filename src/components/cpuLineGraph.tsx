@@ -4,16 +4,8 @@ import { Line } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 Chart.register(CategoryScale);
 import { useSelector } from 'react-redux';
-import { AllStates } from '../types';
+import { AllStates, ChartObject } from '../types';
 import { useGetCPUDataQuery } from '../services/containerQuery';
-
-interface ChartObject {
-  label: string;
-  data: String[];
-  backgroundColor: string[];
-  borderColor: string[];
-  borderWidth: number;
-}
 
 export default function cpuLineGraph() {
   const state = useSelector((state: AllStates) => state);

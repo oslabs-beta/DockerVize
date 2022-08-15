@@ -37,3 +37,11 @@ export interface useSelectorState {
 }
 
 export type PostResponse = string;
+
+export interface ChartObject {
+  label: string;
+  data: String[];
+  backgroundColor: string[];
+  borderColor: string[];
+  borderWidth: number;
+}

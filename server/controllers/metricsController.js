@@ -73,12 +73,6 @@ metricsController.getMemoryData = async (req, res, next) => {
 };
 
 metricsController.getCpu = async (req, res, next) => {
-  //this is req.body.query = rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100
-  // const q = 'rate(container_cpu_user_seconds_total{id=~"/docker.*"}[30s])*100';
-  // const int = '15';
-  // const start = res.locals.end - 300;
-  // console.log('we are at the cpu metrics middleware.');
-  // console.log('start', res.locals.start, 'res.locals.end', res.locals.end);
   try {
     const stats = await axios.get(
       `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`

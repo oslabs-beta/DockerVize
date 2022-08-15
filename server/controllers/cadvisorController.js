@@ -11,25 +11,18 @@ const cadvisorController = {};
 //   return next();
 // };
 
-
 cadvisorController.restartCadvisor = async (req, res, next) => {
-  console.log('trying to start cadvisor')
-      exec ('docker start cadvisor', (error, stdout, stderr) => {
-      if (!stderr) {
-        res.locals.cadvisorRunning = 'yes';
-        return next();
-      }
-      else {
-       console.log('reg error', error);
-       console.log('stdout', stdout);
-       console.log('stderr', stderr);
-        return next ();
-      }
-      
-      
-    }); 
-    
-}
+  console.log('trying to start cadvisor');
+  exec('docker start cadvisor', (error, stdout, stderr) => {
+    if (!stderr) {
+      res.locals.cadvisorRunning = 'yes';
+      return next();
+    } else {
+      console.log('reg error', error);
+      return next();
+    }
+  });
+};
 cadvisorController.startCadvisor = async (req, res, next) => {
   if (res.locals.cadvisorRunning) return next();
   if (process.platform === 'linux' || process.platform === 'win32') {
@@ -60,4 +53,3 @@ cadvisorController.startCadvisor = async (req, res, next) => {
 };
 
 module.exports = cadvisorController;
-
