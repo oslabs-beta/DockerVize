@@ -81,6 +81,16 @@ h1 {
   // font-weight: 200;
 }
 
+.inner-metrics-container {
+  display: flex;
+}
+
+.left-metrics,
+.right-metrics {
+  display: flex;
+  flex-direction: column;
+}
+
 //Quit Button
 .header-component button {
   border-radius: 5px;
@@ -189,7 +199,6 @@ h1 {
 }
 
 .form-switch input:checked + i {
-  // background-color: #4bd763;
   background-color: #4a73e8;
 }
 
@@ -199,14 +208,4 @@ h1 {
 
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
-}
-
-.inner-metrics-container {
-  display: flex;
-}
-
-.left-metrics,
-.right-metrics {
-  display: flex;
-  flex-direction: column;
 }

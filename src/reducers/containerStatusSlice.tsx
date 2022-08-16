@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
-import { ContainerResponse, AllStates } from '../types';
+import { ContainerResponse, AllStates, ObjectElement } from '../types';
 
 const initialState: AllStates = {};
 
@@ -21,7 +21,7 @@ export const containerStatusSlice = createSlice({
         if (!(data.payload[i].id in state)) {
           state[currentId] = {
             name: data.payload[i].name,
-            statusState: data.payload[i].state === 'running',
+            statusState: data.payload[i].state,
             dataState: false,
           };
         }
@@ -30,9 +30,12 @@ export const containerStatusSlice = createSlice({
     quitButton: (state: AllStates) => {
       console.log('newState: ', current(state));
     },
-    toggleStatus: (state: AllStates, id: PayloadAction<string>) => {
-      state[id.payload].statusState = !current(state)[id.payload].statusState;
-      // console.log('this is state: ', current(state)[id.payload]);
+
+    //prettier-ignore
+    toggleStatus: (state: AllStates, container: PayloadAction<ObjectElement>) => {
+      
+      state[container.payload.id].statusState = container.payload.state;
+      // console.log('this is state: ', current(state)[id.payload].statusState);
     },
     toggleData: (state: AllStates, id: PayloadAction<string>) => {
       state[id.payload].dataState = !current(state)[id.payload].dataState;

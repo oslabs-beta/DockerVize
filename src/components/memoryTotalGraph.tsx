@@ -18,7 +18,7 @@ export default function memoryTotalGraph() {
 
   // let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
   let data = useGetMemoryDataQuery(undefined, { pollingInterval: 1000 });
-  console.log('data1: ', data.data);
+  // console.log('data1: ', data.data);
   // console.log('data2: ', data2.data);
 
   if (data && data.data) {

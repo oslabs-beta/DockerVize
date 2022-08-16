@@ -44,10 +44,9 @@ metricsController.getMemoryData = async (req, res, next) => {
         totalData[dataPairArr[0]] += Number(dataPairArr[1]);
       });
     }
-  
+
     res.locals.data = dockerData;
     return next();
-
   } catch (err) {
     return next(err);
   }
@@ -56,7 +55,6 @@ metricsController.getMemoryData = async (req, res, next) => {
 //Query Prometheus to obtain cpu metrics and populate an array with the results, filtering out the data for the /docker
 //container and the /docker/buildx containers.
 metricsController.getCpu = async (req, res, next) => {
- 
   try {
     const stats = await axios.get(
       `http://localhost:9090/api/v1/query_range?query=${req.body.query}&start=${res.locals.start}&end=${res.locals.end}&step=${req.body.interval}`

@@ -4,16 +4,8 @@ import { Line } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 Chart.register(CategoryScale);
 import { useSelector } from 'react-redux';
-import { AllStates } from '../types';
+import { AllStates, ChartObject } from '../types';
 import { useGetCPUDataQuery } from '../services/containerQuery';
-
-interface ChartObject {
-  label: string;
-  data: String[];
-  backgroundColor: string[];
-  borderColor: string[];
-  borderWidth: number;
-}
 
 export default function cpuLineGraph() {
   const state = useSelector((state: AllStates) => state);
@@ -22,7 +14,7 @@ export default function cpuLineGraph() {
   let cpuYAxis: ChartObject[] = [];
 
   let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
-  console.log('data: ', data.data);
+  // console.log('data: ', data.data);
 
   if (data && data.data) {
     const timeValues: any = data.data[0]['values'];

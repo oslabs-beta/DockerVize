@@ -14,7 +14,7 @@ export default function cpuTotalGraph() {
   let currentCpuMetric: number[] = [];
 
   let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
-  console.log('data: ', data.data);
+  // console.log('data: ', data.data);
 
   if (data && data.data) {
     for (let i = 0; i < data.data.length; i++) {
