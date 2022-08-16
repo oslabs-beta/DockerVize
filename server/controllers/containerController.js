@@ -6,11 +6,13 @@ const axios = require('axios');
 const path = require('path');
 const containerController = {};
 
+
 // This is the exec call to get the container info.
 containerController.getContainers = async (req, res, next) => {
   console.log('Running getContainers middleware...');
   const containerInfo = [];
 
+  //get all the data and from this command and filter out the stuff you don't need
   let rawData = await awaitExec(`docker ps --all --quiet`);
   rawData = rawData.stdout;
 
@@ -38,27 +40,22 @@ containerController.getContainers = async (req, res, next) => {
 
     for (const key in output) {
       if (key === 'stdout') {
-        // console.log(`${key}`);
         const stdoutObj = JSON.parse(output[key]);
-        // console.log(stdoutObj);
         containerObj.id = containerID;
         containerObj.name = stdoutObj[0].Name;
         containerObj.state = stdoutObj[0].State.Status;
         containerInfo.push(containerObj);
       }
     }
-
-    // containerObj.id = containerID;
-    // containerObj.name = stdoutObj[0].Name;
-    // containerObj.status = stdoutObj[0].State.Status;
-
-    // console.log(output);
   }
-  // console.log(containerInfo);
+
+  //save the correct info on res locals
   res.locals.containers = containerInfo;
   return next();
 };
 
+
+//here we check to see if prometheus and cadvisor are running before we move on to the next piece of middleware
 containerController.checkContainers = async (req, res, next) => {
   let counter = 0;
   console.log('we are checking for cadvisor and prometheus');
@@ -66,12 +63,8 @@ containerController.checkContainers = async (req, res, next) => {
   const containerCheck = () => {
     //setTimeout because it can take a while for the containers to boot up
     setTimeout(async () => {
-      console.log('Weve reached the container check helper function')
-      console.log('this is the counter', counter);
       //wait a maximum of 20 seconds for the containers to boot up
       if (counter === 100) {
-        console.log('Weve entered the if statement where counter is equal to 100');
-        //console.log('counter has reached 10');
         //if it isn't booted up in 20 seconds send this error message
         const err = {
           log: 'Check containers middleware timed out',
@@ -82,17 +75,14 @@ containerController.checkContainers = async (req, res, next) => {
         };
         return next(err);
       } else {
-        console.log('Weve entered the else statement when counter is not equal to 100');
         const result = exec ('docker ps', (error, stdout, stderr) => {
           //check if the containers are running
-         
           if (stdout.includes('cadvisor') && stdout.includes('prometheus')) {
             return next();
           }
           //if its not running, check again
           else {
             counter++;
-            //console.log(counter);
             containerCheck();
           }
         });
@@ -102,6 +92,10 @@ containerController.checkContainers = async (req, res, next) => {
   containerCheck();
 }
 
+//For container function exec calls standard error handling isn't appropriate.
+//We've handled errors by creating variable to display possible exec errors.
+
+//exec call to stop prometheus and docker
 containerController.stopContainers = async (req, res, next) => {
   exec('docker stop prometheus docker stop cadvisor', (error, stdout, stderr) => {
     if (error || stderr){
@@ -122,6 +116,8 @@ containerController.stopContainers = async (req, res, next) => {
 });
 }
 
+
+//stop one container
 containerController.stopOne = async (req, res, next) => {
   const { name } = req.body;
   exec(`docker stop ${name}`, (error, stdout, stderr) => {
@@ -143,6 +139,7 @@ containerController.stopOne = async (req, res, next) => {
 });
 }
 
+//start one container
 containerController.startOne = async (req, res, next) => {
   const { name } = req.body;
   exec(`docker start ${name}`, (error, stdout, stderr) => {
@@ -165,6 +162,7 @@ containerController.startOne = async (req, res, next) => {
  
 }
 
+//pause one container
 containerController.pauseOne = async (req, res, next) => {
   const { name } = req.body;
   exec(`docker pause ${name}`, (error, stdout, stderr) => {
@@ -186,6 +184,8 @@ containerController.pauseOne = async (req, res, next) => {
 })
 }
 
+
+//unpause one container
 containerController.unpauseOne = async (req, res, next) => {
   const { name } = req.body;
   exec(`docker unpause ${name}`, (error, stdout, stderr) => {
