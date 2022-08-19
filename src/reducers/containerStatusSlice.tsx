@@ -24,6 +24,11 @@ export const containerStatusSlice = createSlice({
             statusState: data.payload[i].state,
             dataState: false,
           };
+        } else {
+          state[currentId].statusState = data.payload[i].state;
+          if (!data.payload[i].state) {
+            state[currentId].dataState = false;
+          }
         }
       }
     },

@@ -6,11 +6,16 @@ import { AllStates } from '../types';
 
 const Container: React.FC<ObjectElement> = (props) => {
   //state is a little misleading because it's just the name of a property
-  const { name, state, id } = props;
+  const { id } = props;
   //This is the real state
+
   const containerState = useSelector((state: AllStates) => state);
+  // console.log('containerState? : ', containerState);
+
   const containerStatusToggle: any = containerState.statusToggle;
   let containerStatus = containerStatusToggle[id].statusState;
+  const name = containerStatusToggle[id].name;
+  // let state = containerStatus;
 
   const dispatch = useDispatch();
 
@@ -50,7 +55,10 @@ const Container: React.FC<ObjectElement> = (props) => {
       body: JSON.stringify(body),
     });
   };
-
+  if (name === '/epic_cerf') {
+    // console.log('id:', id);
+    console.log('container state: ', [name, containerStatus]);
+  }
   return (
     <div className='container'>
       <div>
@@ -61,7 +69,7 @@ const Container: React.FC<ObjectElement> = (props) => {
           <div className='toggleText'>Status</div>
           {name !== '/cadvisor' && name !== '/prometheus' ? (
             <select
-              defaultValue={state}
+              value={containerStatus}
               id={`dropdown${id}`}
               onChange={() => {
                 let previousContainerStatus = containerStatus;
@@ -126,28 +134,7 @@ const Container: React.FC<ObjectElement> = (props) => {
               </label>
             </>
           )}
-          {/* <label
-            className='form-switch'
-            id={`dataButton${id}`}
-            onChange={() => {
-              if (containerStatus === 'running') {
-                dispatch(toggleData(id));
-              } else console.log('Container not running');
-            }}
-          >
-            {containerStatus !== 'running' ? (
-              <>
-                <input
-                  id={`dataCheckmark${id}`}
-                  type='checkbox'
-                  disabled
-                ></input>
-              </>
-            ) : (
-              <input id={`dataCheckmark${id}`} type='checkbox'></input>
-            )}
-            <i></i>
-          </label> */}
+          {/* Instead of Get Data toggle, spawn empty obj/space */}
         </div>
       </div>
     </div>
