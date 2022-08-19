@@ -8,6 +8,7 @@
     "dev": "NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack serve --open",
     "build": "webpack",
     "test": "jest",
+    "supertest": "jest __tests__/supertest.js",
     "start": "NODE_ENV=production node server/server.js"
   },
   "repository": {
