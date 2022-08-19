@@ -4,18 +4,18 @@ import { useGetContainersQuery } from '../services/containerQuery';
 
 import { ObjectElement } from '../types';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { getContainerStates } from '../reducers/containerStatusSlice';
-import { AllStates } from '../types';
+import { useDispatch } from 'react-redux';
+import {
+  getContainerStates,
+  toggleDataOff,
+} from '../reducers/containerStatusSlice';
+// import { AllStates } from '../types';
 
 const DockerContainers: React.FC = () => {
   let { data, error, isLoading } = useGetContainersQuery();
 
   const dispatch = useDispatch();
   if (data) dispatch(getContainerStates(data));
-
-  let temp: any = 0;
-  // console.log('Data Query: ', data);
 
   useEffect(() => {
     setInterval(async () => {
@@ -25,42 +25,19 @@ const DockerContainers: React.FC = () => {
         },
       }).then((response) => response.json());
       // console.log('RawData: ', rawData);
-      if (rawData !== data) temp = rawData;
+      if (rawData !== data) data = rawData;
 
-      if (temp) {
-        // console.log('Temp: ', temp);
-        data = temp;
-        // console.log('New Data: ', data);
-        if (data) dispatch(getContainerStates(data));
-      }
+      if (data) {
+        dispatch(getContainerStates(data));
 
-      const containerState = useSelector((state: AllStates) => state);
-      const containerStatusToggle: any = containerState.statusToggle;
-      // console.log('ContainerStatusToggle: ', containerStatusToggle);
-      const output: any = [];
-      for (let key in containerStatusToggle) {
-        output.push({
-          id: key,
-          name: containerStatusToggle[key]['name'],
-          state: containerStatusToggle[key]['statusState'],
-        });
+        for (let container of data) {
+          if (container.state !== 'running')
+            dispatch(toggleDataOff(container.id));
+        }
       }
-      data = output;
+      console.log('data: ', data);
     }, 5_000);
-  }, [temp]);
-
-  // const containerState = useSelector((state: AllStates) => state);
-  // const containerStatusToggle: any = containerState.statusToggle;
-  // // console.log('ContainerStatusToggle: ', containerStatusToggle);
-  // const output: any = [];
-  // for (let key in containerStatusToggle) {
-  //   output.push({
-  //     id: key,
-  //     name: containerStatusToggle[key]['name'],
-  //     state: containerStatusToggle[key]['statusState'],
-  //   });
-  // }
-  // data = output;
+  });
 
   return (
     <div className='docker-container'>

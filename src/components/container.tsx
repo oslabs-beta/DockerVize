@@ -1,7 +1,11 @@
 import React from 'react';
 import { ObjectElement } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleStatus, toggleData } from '../reducers/containerStatusSlice';
+import {
+  toggleStatus,
+  toggleData,
+  // toggleDataOff,
+} from '../reducers/containerStatusSlice';
 import { AllStates } from '../types';
 
 const Container: React.FC<ObjectElement> = (props) => {
@@ -57,7 +61,7 @@ const Container: React.FC<ObjectElement> = (props) => {
   };
   if (name === '/epic_cerf') {
     // console.log('id:', id);
-    console.log('container state: ', [name, containerStatus]);
+    // console.log('container state: ', [name, containerStatus]);
   }
   return (
     <div className='container'>
@@ -105,7 +109,10 @@ const Container: React.FC<ObjectElement> = (props) => {
         <div className='ea-btn'>
           {containerStatus !== 'running' ? (
             <>
-              <div style={{ marginRight: '63px' }}></div>
+              <div
+                // onLoad={() => dispatch(toggleDataOff(id))}
+                style={{ marginRight: '63px' }}
+              ></div>
             </>
           ) : (
             <>

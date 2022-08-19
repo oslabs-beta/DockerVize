@@ -17,11 +17,13 @@ interface ChartObject {
 
 export default function memoryLineGraph() {
   const state = useSelector((state: AllStates) => state);
+  // console.log('is this state: ', state.statusToggle);
 
   let timeXAxis = [];
   let bytesYAxis: ChartObject[] = [];
 
   let data = useGetMemoryDataQuery(undefined, { pollingInterval: 1000 });
+  // console.log('queries data: ', data);
   if (data && data.data) {
     const timeValues: any = data.data[0]['values'];
     for (const index in timeValues) {
