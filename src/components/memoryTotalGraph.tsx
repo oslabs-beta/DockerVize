@@ -16,10 +16,7 @@ export default function memoryTotalGraph() {
   let containerNames: string[] = [];
   let currentMemoryMetric: number[] = [];
 
-  // let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
   let data = useGetMemoryDataQuery(undefined, { pollingInterval: 1000 });
-  // console.log('data1: ', data.data);
-  // console.log('data2: ', data2.data);
 
   if (data && data.data) {
     for (let i = 0; i < data.data.length; i++) {
@@ -48,7 +45,7 @@ export default function memoryTotalGraph() {
   }
 
   return (
-    <div>
+    <div style={{ width: '400px' }}>
       <Doughnut
         data={{
           labels: containerNames,
@@ -78,7 +75,7 @@ export default function memoryTotalGraph() {
           plugins: {
             // legend: {
             //   labels: {
-            //     padding: 0, //default is 10
+            //     padding: 10, //default is 10
             //   },
             //   display: true,
             //   position: 'top',
@@ -87,6 +84,9 @@ export default function memoryTotalGraph() {
             title: {
               display: true,
               text: `Total Memory Usage: ${totalMemory} mb`,
+              font: {
+                size: 13,
+              },
             },
           },
           radius: 125,

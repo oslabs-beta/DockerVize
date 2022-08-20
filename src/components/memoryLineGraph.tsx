@@ -96,6 +96,9 @@ export default function memoryLineGraph() {
             title: {
               display: true,
               text: 'Container Memory Usage',
+              font: {
+                size: 13,
+              },
             },
           },
           maintainAspectRatio: false,

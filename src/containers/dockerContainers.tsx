@@ -35,7 +35,7 @@ const DockerContainers: React.FC = () => {
             dispatch(toggleDataOff(container.id));
         }
       }
-      console.log('data: ', data);
+      // console.log('data: ', data);
     }, 5_000);
   });
 
@@ -58,7 +58,7 @@ const DockerContainers: React.FC = () => {
         <>Loading...</>
       ) : data ? (
         <>
-          <div>Docker Containers</div>
+          <div className='container-header'>Docker Containers</div>
           {data.map((container: ObjectElement) => {
             return (
               <Container

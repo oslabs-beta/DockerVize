@@ -70,36 +70,41 @@ const Container: React.FC<ObjectElement> = (props) => {
       </div>
       <div className='btns'>
         <div className='ea-btn'>
-          <div className='toggleText'>Status</div>
+          <div className='toggleText'>Status:</div>
           {name !== '/cadvisor' && name !== '/prometheus' ? (
-            <select
-              value={containerStatus}
-              id={`dropdown${id}`}
-              onChange={() => {
-                let previousContainerStatus = containerStatus;
-                let selectedOption = updateContainerStatus(id);
-                dispatch(
-                  toggleStatus({
-                    id: id,
-                    name: name,
-                    state: selectedOption,
-                  })
-                );
-                //If previous data state was running and current status state is not running - then dispatch toggle data
-                if (
-                  previousContainerStatus === 'running' &&
-                  selectedOption !== 'running' &&
-                  containerStatusToggle[id].dataState
-                ) {
-                  dispatch(toggleData(id));
-                  console.log([previousContainerStatus, selectedOption]);
-                }
-              }}
-            >
-              <option value='running'>Running</option>
-              <option value='paused'>Paused</option>
-              <option value='exited'>Exited</option>
-            </select>
+            <>
+              <div className='customSelect'>
+                <select
+                  value={containerStatus}
+                  id={`dropdown${id}`}
+                  onChange={() => {
+                    let previousContainerStatus = containerStatus;
+                    let selectedOption = updateContainerStatus(id);
+                    dispatch(
+                      toggleStatus({
+                        id: id,
+                        name: name,
+                        state: selectedOption,
+                      })
+                    );
+                    //If previous data state was running and current status state is not running - then dispatch toggle data
+                    if (
+                      previousContainerStatus === 'running' &&
+                      selectedOption !== 'running' &&
+                      containerStatusToggle[id].dataState
+                    ) {
+                      dispatch(toggleData(id));
+                      console.log([previousContainerStatus, selectedOption]);
+                    }
+                  }}
+                >
+                  <option value='running'>Running</option>
+                  <option value='paused'>Paused</option>
+                  <option value='exited'>Exited</option>
+                </select>
+                <span className='customArrow'></span>
+              </div>
+            </>
           ) : (
             <>
               <p>Running</p>
@@ -109,10 +114,8 @@ const Container: React.FC<ObjectElement> = (props) => {
         <div className='ea-btn'>
           {containerStatus !== 'running' ? (
             <>
-              <div
-                // onLoad={() => dispatch(toggleDataOff(id))}
-                style={{ marginRight: '63px' }}
-              ></div>
+              {/* Instead of Get Data toggle, spawn empty obj/space */}
+              <div style={{ marginRight: '50px' }}></div>
             </>
           ) : (
             <>
@@ -141,7 +144,6 @@ const Container: React.FC<ObjectElement> = (props) => {
               </label>
             </>
           )}
-          {/* Instead of Get Data toggle, spawn empty obj/space */}
         </div>
       </div>
     </div>

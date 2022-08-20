@@ -91,6 +91,9 @@ export default function cpuLineGraph() {
             title: {
               display: true,
               text: 'Container CPU Usage',
+              font: {
+                size: 13,
+              },
             },
           },
           maintainAspectRatio: false,
