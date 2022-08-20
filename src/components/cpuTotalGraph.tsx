@@ -39,7 +39,7 @@ export default function cpuTotalGraph() {
   }
 
   return (
-    <div>
+    <div style={{ width: '400px' }}>
       <Doughnut
         data={{
           labels: containerNames,
@@ -72,7 +72,10 @@ export default function cpuTotalGraph() {
           plugins: {
             title: {
               display: true,
-              text: `Current Total CPU Usage: ${totalCpu}%`,
+              text: `Total CPU Usage: ${totalCpu}%`,
+              font: {
+                size: 13,
+              },
             },
           },
           radius: 125,

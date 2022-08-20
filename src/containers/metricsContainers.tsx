@@ -25,7 +25,6 @@ const MetricsContainers: React.FC = () => {
         <div className='inner-metrics-container'>
           <div className='left-metrics'>
             <CpuLineGraph />
-            <div style={{ height: '20px', width: '20px' }}></div>
             <CpuTotalGraph />
           </div>
 
