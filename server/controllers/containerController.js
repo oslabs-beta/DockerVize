@@ -97,7 +97,7 @@ containerController.checkContainers = async (req, res, next) => {
 
 //exec call to stop prometheus and docker
 containerController.stopContainers = async (req, res, next) => {
-  exec('docker stop prometheus docker stop cadvisor', (error, stdout, stderr) => {
+  exec('docker stop prometheus cadvisor', (error, stdout, stderr) => {
     if (error || stderr){
       const errorLog = error || stderr;
       const err = {
