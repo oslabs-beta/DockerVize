@@ -19,19 +19,21 @@ h1 {
 
 .docker-container {
   width: 30%;
+  min-width: 550px;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px 20px;
+  margin: 30px 30px;
   // background-color: #11c1e0;
 }
 
 .metrics-container {
   display: flex;
-  // justify-content: space-between;
+  width: 80%;
+  justify-content: space-between;
   align-items: center;
-  margin: 50px 20px;
+  margin: 30px 0;
   // border: 1px black solid;
 }
 
@@ -59,12 +61,14 @@ h1 {
 }
 
 .header-container {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   // border: 1px solid #4A73E8;
   display: flex;
   justify-content: space-around;
   width: 100%;
   align-items: center;
+  // background: red;
+  height: 125px;
   background: linear-gradient(rgba(19, 119, 234, 0.964), lightblue);
 }
 
@@ -89,6 +93,8 @@ h1 {
 .right-metrics {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 //Quit Button
@@ -139,6 +145,8 @@ h1 {
   display: flex;
   height: 100%;
   width: 100%;
+  justify-content: space-around;
+  // background-color: yellow;
 }
 
 //Toggle buttons
@@ -209,3 +217,66 @@ h1 {
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
 }
+
+canvas {
+  // border: red solid 1px;
+  margin-bottom: 20px;
+  margin-right: 60px;
+}
+
+.container-header {
+  font-family: 'Raleway', sans-serif;
+  color: #4a73e8;
+
+  font-weight: 700;
+}
+
+select {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  font-size: medium;
+  margin-left: 5px;
+  border: 1.5px solid #6c85cb;
+  overflow: hidden;
+  background: transparent;
+  appearance: none;
+  padding: 1.5px 20px 1.5px 2px;
+}
+
+.customSelect {
+  position: relative;
+}
+
+.customArrow {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 1rem;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.customArrow::before,
+.customArrow::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-75%, -50%);
+}
+
+.customArrow::before {
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #6c85cb;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
+///

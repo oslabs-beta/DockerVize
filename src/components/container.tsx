@@ -1,16 +1,25 @@
 import React from 'react';
 import { ObjectElement } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleStatus, toggleData } from '../reducers/containerStatusSlice';
+import {
+  toggleStatus,
+  toggleData,
+  // toggleDataOff,
+} from '../reducers/containerStatusSlice';
 import { AllStates } from '../types';
 
 const Container: React.FC<ObjectElement> = (props) => {
   //state is a little misleading because it's just the name of a property
-  const { name, state, id } = props;
+  const { id } = props;
   //This is the real state
+
   const containerState = useSelector((state: AllStates) => state);
+  // console.log('containerState? : ', containerState);
+
   const containerStatusToggle: any = containerState.statusToggle;
   let containerStatus = containerStatusToggle[id].statusState;
+  const name = containerStatusToggle[id].name;
+  // let state = containerStatus;
 
   const dispatch = useDispatch();
 
@@ -50,7 +59,10 @@ const Container: React.FC<ObjectElement> = (props) => {
       body: JSON.stringify(body),
     });
   };
-
+  if (name === '/epic_cerf') {
+    // console.log('id:', id);
+    // console.log('container state: ', [name, containerStatus]);
+  }
   return (
     <div className='container'>
       <div>
@@ -58,36 +70,41 @@ const Container: React.FC<ObjectElement> = (props) => {
       </div>
       <div className='btns'>
         <div className='ea-btn'>
-          <div className='toggleText'>Status</div>
+          <div className='toggleText'>Status:</div>
           {name !== '/cadvisor' && name !== '/prometheus' ? (
-            <select
-              defaultValue={state}
-              id={`dropdown${id}`}
-              onChange={() => {
-                let previousContainerStatus = containerStatus;
-                let selectedOption = updateContainerStatus(id);
-                dispatch(
-                  toggleStatus({
-                    id: id,
-                    name: name,
-                    state: selectedOption,
-                  })
-                );
-                //If previous data state was running and current status state is not running - then dispatch toggle data
-                if (
-                  previousContainerStatus === 'running' &&
-                  selectedOption !== 'running' &&
-                  containerStatusToggle[id].dataState
-                ) {
-                  dispatch(toggleData(id));
-                  console.log([previousContainerStatus, selectedOption]);
-                }
-              }}
-            >
-              <option value='running'>Running</option>
-              <option value='paused'>Paused</option>
-              <option value='exited'>Exited</option>
-            </select>
+            <>
+              <div className='customSelect'>
+                <select
+                  value={containerStatus}
+                  id={`dropdown${id}`}
+                  onChange={() => {
+                    let previousContainerStatus = containerStatus;
+                    let selectedOption = updateContainerStatus(id);
+                    dispatch(
+                      toggleStatus({
+                        id: id,
+                        name: name,
+                        state: selectedOption,
+                      })
+                    );
+                    //If previous data state was running and current status state is not running - then dispatch toggle data
+                    if (
+                      previousContainerStatus === 'running' &&
+                      selectedOption !== 'running' &&
+                      containerStatusToggle[id].dataState
+                    ) {
+                      dispatch(toggleData(id));
+                      console.log([previousContainerStatus, selectedOption]);
+                    }
+                  }}
+                >
+                  <option value='running'>Running</option>
+                  <option value='paused'>Paused</option>
+                  <option value='exited'>Exited</option>
+                </select>
+                <span className='customArrow'></span>
+              </div>
+            </>
           ) : (
             <>
               <p>Running</p>
@@ -97,7 +114,8 @@ const Container: React.FC<ObjectElement> = (props) => {
         <div className='ea-btn'>
           {containerStatus !== 'running' ? (
             <>
-              <div style={{ marginRight: '63px' }}></div>
+              {/* Instead of Get Data toggle, spawn empty obj/space */}
+              <div style={{ marginRight: '50px' }}></div>
             </>
           ) : (
             <>
@@ -126,28 +144,6 @@ const Container: React.FC<ObjectElement> = (props) => {
               </label>
             </>
           )}
-          {/* <label
-            className='form-switch'
-            id={`dataButton${id}`}
-            onChange={() => {
-              if (containerStatus === 'running') {
-                dispatch(toggleData(id));
-              } else console.log('Container not running');
-            }}
-          >
-            {containerStatus !== 'running' ? (
-              <>
-                <input
-                  id={`dataCheckmark${id}`}
-                  type='checkbox'
-                  disabled
-                ></input>
-              </>
-            ) : (
-              <input id={`dataCheckmark${id}`} type='checkbox'></input>
-            )}
-            <i></i>
-          </label> */}
         </div>
       </div>
     </div>
