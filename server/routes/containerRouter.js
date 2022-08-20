@@ -8,7 +8,7 @@ const promController = require('../controllers/promController');
 const cadvisorController = require('../controllers/cadvisorController');
 
 //exit prometheus and cadvisor containers
-containerRouter.get('/exit', containerController.stopContainers, (req, res) => {
+containerRouter.post('/exit', containerController.stopContainers, (req, res) => {
   return res.status(200).send(res.locals.message);
 });
 
