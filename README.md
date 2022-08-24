@@ -1,7 +1,7 @@
 <p align="center" width="100%">
   <a href=https://github.com/oslabs-beta/DockerVize"><img width="33%" src="https://user-images.githubusercontent.com/97713467/186445700-fcaa7778-5557-4947-9e1d-8e72ddd6e5ca.png"></a><br>
   Container metrics and functionality at the touch of a button.<br>
-  View Demo - Report Bug - Request Feature
+  View Demo · <a href="https://github.com/oslabs-beta/DockerVize/issues">Report Bug</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Request Feature</a>
  </p>
  <p>
  <h2> About the Project</h2>
@@ -23,7 +23,7 @@
  - Make sure you have <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or Docker Daemon running in the background.
  - For security purposes, make sure you use this app in your local network.
  
- <h2>Installation</h2>
+ <b>Installation</b>
  
  1. Clone the repo onto your local machine
  2. Install dependencies (npm install)
