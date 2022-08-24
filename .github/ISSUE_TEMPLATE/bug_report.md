@@ -1,62 +1,52 @@
-<p align="center" width="100%">
-  <a href=https://github.com/oslabs-beta/DockerVize"><img width="33%" src="https://user-images.githubusercontent.com/97713467/186445700-fcaa7778-5557-4947-9e1d-8e72ddd6e5ca.png"></a><br>
-  Container metrics and functionality at the touch of a button.<br>
-![StartingClip](https://user-images.githubusercontent.com/97713467/186500641-f9066f3f-7a66-40e1-b077-1ea195901a1b.gif)
- · <a href="https://github.com/oslabs-beta/DockerVize/issues">Report Bug</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Request Feature</a>
- </p>
- <p>
- <h1> Pull request Test</h1>
- <h2> About the Project</h2>
- <b> Built With </b>
- 
- - [React](https://reactjs.org/docs/getting-started.html)
- - [Redux Toolkit](https://redux-toolkit.js.org/)
- - [Express](https://expressjs.com/)
- - [Docker](https://www.docker.com/)
- - [Node child_process](https://nodejs.org/en/)
- - [Typescript](https://www.typescriptlang.org/)
- - [Prometheus](https://prometheus.io/)
- - [CAdvisor](https://github.com/google/cadvisor)
- 
- <h2>Getting Started</h2>
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
 
-<b>Prerequisites</b>
+---
 
-- You will need [npm](https://www.npmjs.com/) and Docker to get started.
-- Make sure you have <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or Docker Daemon running in the background.
-- For security purposes, make sure you use this app in your local network.
+<!--
 
-<b>Installation</b>
+Please read our Code of Conduct before getting started! 
+By filing an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/bs-beta/DockerVize/.github/blob/master/CODE_OF_CONDUCT.md
 
-1.  Clone the repo onto your local machine
-2.  Install dependencies (npm install -f)
-3.  Run the app (npm run dev)
+-->
 
-<h2>Usage</h2>
-Once the application loads you will have access to native Docker Daemon functionality in an intuitive GUI.
+### Prerequisites
 
-- Toggle the data buttons to view memory and CPU for each container.
-- Access container functionality in the drop down menu to stop, start, pause, or unpause containers.
-- Any containers added in Docker Daemon will be automatically updated in the application.
+* [ ] Put an X between the brackets on this line if you have done all of the following:
+    * Reproduced the problem in Safe Mode
+    * Checked the FAQs on the ReadMe for common solutions: <https://github.com/oslabs-beta/dockervize#readme>
+    * Checked that your issue isn't already filed: <https://github.com/oslabs-beta/DockerVize/issues>
 
-<h2>Roadmap</h2>
-See the <a href="https://github.com/oslabs-beta/DockerVize/issues">open issues</a> for a list of proposed features (and known issues).
+### Description
 
-<h2>Contributing</h2>
-Contributions are greatly appreciated. If you would like to contribute, please follow the steps listed below:
+<!-- Description of the issue -->
 
-1. Fork the project
-2. Create your feature branch (git checkout -b feature/YourFeatureHere)
-3. Commit your changes (git commit -m 'Add your feature')
-4. Push to the branch (git push origin feature/YourFeatureHere)
-5. Open a pull request
+### Steps to Reproduce
 
-<h2>License</h2>
-Distributed under the MIT License. See License for more information.
+1. <!-- First Step -->
+2. <!-- Second Step -->
+3. <!-- and so on… -->
 
-<h2>Contact</h2>
+**Expected behavior:**
 
-- Bruno - [LinkedIn](https://www.linkedin.com/in/alberobruno/), [Github](https://github.com/alberobruno)
-- Sinian - [LinkedIn](https://www.linkedin.com/in/sinian-ma/), [Github](https://github.com/ian-ma-nyc)
-- Jay - [LinkedIn](https://www.linkedin.com/in/jay-hickey-4a18751a0/), [Github](https://github.com/J-hickey)
-- Taryn - [LinkedIn](https://www.linkedin.com/in/taryncunha/), [Github](https://github.com/cunhanator)
+<!-- What you expect to happen -->
+
+**Actual behavior:**
+
+<!-- What actually happens -->
+
+**Reproduces how often:**
+
+<!-- What percentage of the time does it reproduce? -->
+
+### Versions
+
+<!-- You can get this information from copy and pasting the output of `dockervize --version` from the command line. Also, please include the OS and what version of the OS you're running. -->
+
+### Additional Information
+
+<!-- Any additional information, configuration or data that might be necessary to reproduce the issue. -->
