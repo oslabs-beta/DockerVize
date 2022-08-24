@@ -1,7 +1,8 @@
 <p align="center" width="100%">
   <a href=https://github.com/oslabs-beta/DockerVize"><img width="33%" src="https://user-images.githubusercontent.com/97713467/186445700-fcaa7778-5557-4947-9e1d-8e72ddd6e5ca.png"></a><br>
   Container metrics and functionality at the touch of a button.<br>
-  View Demo · <a href="https://github.com/oslabs-beta/DockerVize/issues">Report Bug</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Request Feature</a>
+<a href = "https://user-images.githubusercontent.com/97713467/186499261-198c0ed9-863d-4588-9739-499954458253.mov">
+View Demo</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Report Bug</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Request Feature</a>
  </p>
  <p>
  <h2> About the Project</h2>
@@ -35,7 +36,7 @@ Once the application loads you will have access to native Docker Daemon function
 
 - Toggle the data buttons to view memory and CPU for each container.
 - Access container functionality in the drop down menu to stop, start, pause, or unpause containers.
-- Any containers added in Docker daemon will be automatically updated in the application. 
+- Any containers added in Docker Daemon will be automatically updated in the application. 
 
 <h2>Roadmap</h2>
 See the <a href="https://github.com/oslabs-beta/DockerVize/issues">open issues</a> for a list of proposed features (and known issues).
