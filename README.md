@@ -1,8 +1,8 @@
 <p align="center" width="100%">
   <a href=https://github.com/oslabs-beta/DockerVize"><img width="33%" src="https://user-images.githubusercontent.com/97713467/186445700-fcaa7778-5557-4947-9e1d-8e72ddd6e5ca.png"></a><br>
   Container metrics and functionality at the touch of a button.<br>
-<a href = "https://user-images.githubusercontent.com/97713467/186499261-198c0ed9-863d-4588-9739-499954458253.mov">
-View Demo</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Report Bug</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Request Feature</a>
+![StartingClip](https://user-images.githubusercontent.com/97713467/186500641-f9066f3f-7a66-40e1-b077-1ea195901a1b.gif)
+ · <a href="https://github.com/oslabs-beta/DockerVize/issues">Report Bug</a> · <a href="https://github.com/oslabs-beta/DockerVize/issues">Request Feature</a>
  </p>
  <p>
  <h2> About the Project</h2>
