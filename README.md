@@ -26,7 +26,7 @@
  <b>Installation</b>
  
  1. Clone the repo onto your local machine
- 2. Install dependencies (npm install)
+ 2. Install dependencies (npm install -f)
  3. Run the app (npm run dev)
 
 <h2>Usage</h2>
