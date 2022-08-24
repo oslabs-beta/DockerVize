@@ -12,6 +12,7 @@
  - [Express](https://expressjs.com/)
  - [Docker](https://www.docker.com/)
  - [Node child_process](https://nodejs.org/en/)
+ - [Typescript](https://www.typescriptlang.org/)
  - [Prometheus](https://prometheus.io/)
  - [CAdvisor](https://github.com/google/cadvisor)
  
