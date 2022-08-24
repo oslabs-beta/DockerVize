@@ -16,7 +16,7 @@
  - [CAdvisor](https://github.com/google/cadvisor)
  
  <h2>Getting Started</h2>
- Staring the app is easy!<br> 
+
  <b>Prerequisites</b>
  
  - You will need [npm](https://www.npmjs.com/) and Docker to get started.
