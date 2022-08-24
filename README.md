@@ -1,5 +1,7 @@
 <p align="center" width="100%">
-  <a href=https://github.com/oslabs-beta/DockerVize"><img width="33%" src="https://user-images.githubusercontent.com/97713467/186445700-fcaa7778-5557-4947-9e1d-8e72ddd6e5ca.png"></a><br>
+  <a href=https://github.com/oslabs-beta/DockerVize"><img width="33%" src="https://user-images.githubusercontent.com/97713467/186508494-0249dc54-cdb9-4b1f-9364-716d26e384f0.png"></a></p>
+  <h1 align="center" color="black" style="font-family:RALEWAY">DockerVize</h1>
+<p align="center" width ="100%">
   Container metrics and functionality at the touch of a button.<br>
 <img width="50%" src="https://user-images.githubusercontent.com/97713467/186505180-a2987135-f2cb-4b6d-b8a5-7ed5a5a9fe8d.png")
  </p>
@@ -21,7 +23,7 @@
  <b>Prerequisites</b>
  
  - You will need [npm](https://www.npmjs.com/) and Docker to get started.
- - Make sure you have <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or Docker Daemon running in the background.
+ - Make sure you have <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or Docker daemon running in the background.
  - For security purposes, make sure you use this app in your local network.
  - Ports 3000, 8080, 9090, and 9101 need to be available to run this appplication.
  
@@ -32,11 +34,11 @@
  3. Run the app (npm run dev)
 
 <h2>Usage</h2>
-Once the application loads you will have access to native Docker Daemon functionality in an intuitive GUI.
+Once the application loads you will have access to native Docker daemon functionality in an intuitive GUI.
 
 - Toggle the data buttons to view memory and CPU for each container.
 - Access container functionality in the drop down menu to stop, start, pause, or unpause containers.
-- Any containers added in Docker Daemon will be automatically updated in the application. 
+- Any containers added in Docker daemon will be automatically updated in the application. 
 
 <h2>Roadmap</h2>
 See the <a href="https://github.com/oslabs-beta/DockerVize/issues">open issues</a> for a list of proposed features (and known issues).
