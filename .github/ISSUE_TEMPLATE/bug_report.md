@@ -17,8 +17,7 @@ By filing an Issue, you are expected to comply with it, including treating every
 ### Prerequisites
 
 * [ ] Put an X between the brackets on this line if you have done all of the following:
-    * Reproduced the problem in Safe Mode: <https://flight-manual.atom.io/hacking-atom/sections/debugging/#using-safe-mode>
-    * Followed all applicable steps in the debugging guide: <https://flight-manual.atom.io/hacking-atom/sections/debugging/>
+    * Reproduced the problem in Safe Mode
     * Checked the FAQs on the ReadMe for common solutions: <https://github.com/oslabs-beta/dockervize#readme>
     * Checked that your issue isn't already filed: <https://github.com/oslabs-beta/DockerVize/issues>
 
