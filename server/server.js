@@ -6,7 +6,6 @@ const PORT = 3000;
 const cors = require('cors');
 
 //import routers here
-//router to get docker data
 const containerRouter = require('./routes/containerRouter');
 const metricsRouter = require('./routes/metricsRouter');
 
@@ -18,9 +17,10 @@ app.use(cors());
 
 //serve static files
 app.use(express.static(path.resolve(__dirname, '../dist')));
-app.use(express.static(path.resolve(__dirname, '../src/assets')));
 
-//Routes to /containter and /metrics endpoints
+//app.use(express.static(path.resolve(__dirname, '../src/assets')));
+
+//Routes to /container and /metrics endpoints
 app.use('/container', containerRouter);
 app.use('/metrics', metricsRouter);
 

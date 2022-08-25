@@ -7,7 +7,6 @@ const path = require('path');
 
 //testing route integration
 
-
 /* 
 ***************MUST HAVE DOCKER RUNNING TO RUN THESE TESTS *****************
 **Please make sure that the cadvisor and prometheus containers are running**
@@ -39,16 +38,17 @@ prom/prometheus ;
 
 */
 
-
 describe('Route integration', () => {
-      beforeAll(async () => { 
+    //Before we run tests, we need a container to test our endpoints on
+    beforeAll(async () => { 
         exec('docker run -d --name test_container -p 80:80 docker/getting-started');
     });
-      afterAll(() => {
-         exec('docker rm --force test_container');
+      //after the tests complete, remove the container
+    afterAll(() => {
+        exec('docker rm --force test_container');
     });
     
-
+    //Testing metrics routes
     describe('/metrics', () =>{
         describe('POST', () => {
             it('responds with 200 status and application/json content type', () => {
@@ -79,12 +79,11 @@ describe('Route integration', () => {
                 })
                 .expect('Content-Type', /application\/json/)
                 .expect(200)
-                
-            });
-            
+            });     
         });
     });
 
+    //Testing container functionality
     describe('/containers', () => {
         describe('/container/exit', () => {
             it('responds with a 200 status and a text/html content type', () => {
@@ -144,5 +143,4 @@ describe('Route integration', () => {
             })
         })
     })
-
 });

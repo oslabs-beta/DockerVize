@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
 import DockerContainers from './containers/dockerContainers';
 import Header from './containers/header';
 import MetricsContainers from './containers/metricsContainers';

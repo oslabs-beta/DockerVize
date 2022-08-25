@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { quitButton } from '../reducers/containerStatusSlice';
+import { logStateButton } from '../reducers/containerStatusSlice';
 
-export default function QuitButton() {
+export default function LogStateButton() {
   const dispatch = useDispatch();
   return (
     <div className='header-component'>
       <button
         onClick={() => {
-          dispatch(quitButton());
+          dispatch(logStateButton());
         }}
       >
         Log State

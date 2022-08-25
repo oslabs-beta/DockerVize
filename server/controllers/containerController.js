@@ -1,18 +1,16 @@
-//controllers
 const { exec, execSync } = require('child_process');
 const awaitExec = require('await-exec');
-//const execSync = require('exec-sync');
 const axios = require('axios');
 const path = require('path');
 const containerController = {};
 
 
-// This is the exec call to get the container info.
+// This is the exec call to get the container info
 containerController.getContainers = async (req, res, next) => {
-  console.log('Running getContainers middleware...');
+  // console.log('Running getContainers middleware...');
   const containerInfo = [];
 
-  //get all the data and from this command and filter out the stuff you don't need
+  //query for container data and filter out unnecessary properties
   let rawData = await awaitExec(`docker ps --all --quiet`);
   rawData = rawData.stdout;
 
@@ -31,7 +29,6 @@ containerController.getContainers = async (req, res, next) => {
     return dockerIds;
   };
   const dockerIds = getDockerIds(rawData);
-  // console.log(dockerIds);
 
   for (let i = 0; i < dockerIds.length; i++) {
     const containerID = dockerIds[i];
@@ -49,7 +46,7 @@ containerController.getContainers = async (req, res, next) => {
     }
   }
 
-  //save the correct info on res locals
+  //send final data via res locals
   res.locals.containers = containerInfo;
   return next();
 };
@@ -58,7 +55,7 @@ containerController.getContainers = async (req, res, next) => {
 //here we check to see if prometheus and cadvisor are running before we move on to the next piece of middleware
 containerController.checkContainers = async (req, res, next) => {
   let counter = 0;
-  console.log('we are checking for cadvisor and prometheus');
+  //console.log('we are checking for cadvisor and prometheus');
   //helper function to check if the containers are running or not
   const containerCheck = () => {
     //setTimeout because it can take a while for the containers to boot up
@@ -97,7 +94,7 @@ containerController.checkContainers = async (req, res, next) => {
 
 //exec call to stop prometheus and docker
 containerController.stopContainers = async (req, res, next) => {
-  exec('docker stop prometheus cadvisor', (error, stdout, stderr) => {
+  exec('docker stop prometheus docker stop cadvisor', (error, stdout, stderr) => {
     if (error || stderr){
       const errorLog = error || stderr;
       const err = {
@@ -118,7 +115,7 @@ containerController.stopContainers = async (req, res, next) => {
 
 
 //stop one container
-containerController.stopOne = async (req, res, next) => {
+containerController.stopOne = (req, res, next) => {
   const { name } = req.body;
   exec(`docker stop ${name}`, (error, stdout, stderr) => {
     if (error || stderr){
@@ -140,7 +137,7 @@ containerController.stopOne = async (req, res, next) => {
 }
 
 //start one container
-containerController.startOne = async (req, res, next) => {
+containerController.startOne = (req, res, next) => {
   const { name } = req.body;
   exec(`docker start ${name}`, (error, stdout, stderr) => {
     if (error || stderr){
@@ -163,7 +160,7 @@ containerController.startOne = async (req, res, next) => {
 }
 
 //pause one container
-containerController.pauseOne = async (req, res, next) => {
+containerController.pauseOne = (req, res, next) => {
   const { name } = req.body;
   exec(`docker pause ${name}`, (error, stdout, stderr) => {
     if (error || stderr){
@@ -186,7 +183,7 @@ containerController.pauseOne = async (req, res, next) => {
 
 
 //unpause one container
-containerController.unpauseOne = async (req, res, next) => {
+containerController.unpauseOne = (req, res, next) => {
   const { name } = req.body;
   exec(`docker unpause ${name}`, (error, stdout, stderr) => {
     if (error || stderr){

@@ -1,9 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { containerAPI } from './services/containerQuery';
-
 import statusToggleReducer from './reducers/containerStatusSlice';
 
-// import { useDispatch } from 'react-redux';
 
 export const store = configureStore({
   reducer: {

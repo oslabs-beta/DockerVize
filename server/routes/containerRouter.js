@@ -1,5 +1,4 @@
-//router
-//need to require child process to use exec
+//Must require child process to use exec
 const express = require('express');
 const containerRouter = express.Router();
 const path = require('path');
@@ -7,14 +6,14 @@ const containerController = require('../controllers/containerController');
 const promController = require('../controllers/promController');
 const cadvisorController = require('../controllers/cadvisorController');
 
-//exit prometheus and cadvisor containers
-containerRouter.post('/exit', containerController.stopContainers, (req, res) => {
-  return res.status(200).send(res.locals.message);
-});
-
-containerRouter.post('/stop', containerController.stopOne, (req, res) => {
-  return res.status(200).send(res.locals.message);
-});
+//exit prometheus and cadvisor containers - for future functionality
+containerRouter.post(
+  '/exit',
+  containerController.stopContainers,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+  }
+);
 
 //Route to stop one container
 containerRouter.post('/stop', containerController.stopOne, (req, res) => {
@@ -36,14 +35,10 @@ containerRouter.post('/unpause', containerController.unpauseOne, (req, res) => {
   return res.status(200).send(res.locals.message);
 });
 
-containerRouter.post('/unpause', containerController.unpauseOne, (req, res) => {
-  return res.status(200).send(res.locals.message);
-});
-
 //start prometheus and cadvisor and get a list of all your containers
 containerRouter.get(
   '/',
-
+  
   promController.restartProm,
   promController.startProm,
   cadvisorController.restartCadvisor,

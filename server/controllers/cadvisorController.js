@@ -1,19 +1,14 @@
 const { exec } = require('child_process');
 const awaitExec = require('await-exec');
 const path = require('path');
+
 //Running container advisor (cadvisor) to expose Docker container metrics to Prometheus
-
 const cadvisorController = {};
-
-//Standard middleware error handling won't work here
-// cadvisorController.restartCadvisor = async (req, res, next) => {
-//   exec('docker start cadvisor');
-//   return next();
-// };
 
 //try to start cadvisor if the container is already built on docker
 cadvisorController.restartCadvisor = async (req, res, next) => {
-  console.log('trying to start cadvisor');
+  //Uncomment console log below to check middleware routing
+  //console.log('Trying to start cadvisor');
 
   //try to run the cadvisor container
   exec('docker start cadvisor', (error, stdout, stderr) => {
@@ -21,18 +16,15 @@ cadvisorController.restartCadvisor = async (req, res, next) => {
       //if there is no error, that means our command was succesful and cadvisor is starting
       //set res.locals to skip the build process
       res.locals.cadvisorRunning = 'yes';
-      return next();
-    } else {
-      //if we get an error log it and call next, invoking the next piece of middleware that will build and run the container for you
-      console.log('stderr', stderr);
-      return next();
-    }
+      
+    } return next();
+    
   });
 };
 
 //middleware to build and run cadvisor
 cadvisorController.startCadvisor = async (req, res, next) => {
-  //if cadvisor is already running return next
+  //if cadvisor is already running - move on to next middleware
   if (res.locals.cadvisorRunning) return next();
   //otherwise check the process platform and run the command
   if (process.platform === 'linux' || process.platform === 'win32') {
@@ -41,6 +33,7 @@ cadvisorController.startCadvisor = async (req, res, next) => {
       (error, stdout, stderr) => {}
     );
   } else {
+    //docker command for OS operating systems
     await awaitExec(
       `docker run \
       --volume=/:/rootfs:ro \

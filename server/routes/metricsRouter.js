@@ -3,7 +3,7 @@ const metricsRouter = express.Router();
 const path = require('path');
 const metricsController = require('../controllers/metricsController');
 
-//Route to get cpu information on containers. 
+//Route to get cpu metrics on containers. 
 metricsRouter.post(
   '/cpu',
   metricsController.convertToUnixTime,

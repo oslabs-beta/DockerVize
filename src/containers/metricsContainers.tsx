@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { useGetContainersQuery } from '../services/containerQuery';
-
 import { useDispatch } from 'react-redux';
 import { getContainerStates } from '../reducers/containerStatusSlice';
 import MemoryLineGraph from '../components/memoryLineGraph';
@@ -10,11 +8,15 @@ import MemoryTotalGraph from '../components/memoryTotalGraph';
 import CpuTotalGraph from '../components/cpuTotalGraph';
 
 const MetricsContainers: React.FC = () => {
+
+  //Invoke get container query to grab raw container status from backend
   const { data, error, isLoading } = useGetContainersQuery();
 
+  //Update Global state using received data from backend
   const dispatch = useDispatch();
   if (data) dispatch(getContainerStates(data));
 
+  //Conditional rendering based on query results
   return (
     <div className='metrics-container'>
       {error ? (
