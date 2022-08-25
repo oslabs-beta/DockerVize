@@ -20,25 +20,39 @@
  
  <h2>Getting Started</h2>
 
- <b>Prerequisites</b>
- 
- - You will need [npm](https://www.npmjs.com/) and Docker to get started.
- - Make sure you have <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or Docker daemon running in the background.
- - For security purposes, make sure you use this app in your local network.
- - Ports 3000, 8080, 9090, and 9101 need to be available to run this appplication.
- 
- <b>Installation</b>
- 
- 1. Clone the repo onto your local machine
- 2. Install dependencies (npm install -f)
- 3. Run the app (npm run dev)
+<b>Prerequisites</b>
+
+- You will need [npm](https://www.npmjs.com/) and Docker to get started.
+- Make sure you have <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or Docker daemon running in the background.
+- For security purposes, make sure you use this app in your local network.
+- Ports 3000, 8080, 9090, and 9101 need to be available to run this appplication.
+
+<b>Installation</b>
+
+1.  Clone the repo onto your local machine
+
+```sh
+ git clone https://github.com/oslabs-beta/DockerVize.git
+```
+
+2.  Install dependencies
+
+```sh
+npm install -f
+```
+
+3.  Run the app
+
+```sh
+npm run dev
+```
 
 <h2>Usage</h2>
 Once the application loads you will have access to native Docker daemon functionality in an intuitive GUI.
 
 - Toggle the data buttons to view memory and CPU for each container.
 - Access container functionality in the drop down menu to stop, start, pause, or unpause containers.
-- Any containers added in Docker daemon will be automatically updated in the application. 
+- Any containers added in Docker daemon will be automatically updated in the application.
 
 <h2>Roadmap</h2>
 See the <a href="https://github.com/oslabs-beta/DockerVize/issues">open issues</a> for a list of proposed features (and known issues).
@@ -47,9 +61,24 @@ See the <a href="https://github.com/oslabs-beta/DockerVize/issues">open issues</
 Contributions are greatly appreciated. If you would like to contribute, please follow the steps listed below:
 
 1. Fork the project
-2. Create your feature branch (git checkout -b feature/YourFeatureHere)
-3. Commit your changes (git commit -m 'Add your feature')
+2. Create your feature branch
+
+```sh
+   git checkout -b feature/YourFeatureHere
+```
+
+3. Commit your changes
+
+```sh
+  git commit -m 'Add your feature'
+```
+
 4. Push to the branch (git push origin feature/YourFeatureHere)
+
+```sh
+  git push origin feature/YourFeatureHere
+```
+
 5. Open a pull request
 
 <h2>License</h2>
