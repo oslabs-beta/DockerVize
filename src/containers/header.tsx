@@ -1,9 +1,13 @@
 import React from 'react';
-import QuitButton from '../components/quitButton';
+import LogStateButton from '../components/logStateButton';
+import transparentLogo from '../assets/wordpressTransparent.png';
 
 const Header: React.FC = () => (
   <div className='header-container'>
-    <QuitButton />
+    <img src ={transparentLogo}/>
+    <h1>DockerVize</h1>
+    <LogStateButton />
+
   </div>
 );
 

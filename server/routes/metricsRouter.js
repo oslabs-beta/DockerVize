@@ -1,21 +1,28 @@
 const express = require('express');
 const metricsRouter = express.Router();
 const path = require('path');
-const metricsController = require('../controllers/metricsController')
+const metricsController = require('../controllers/metricsController');
 
-metricsRouter.get('/allMetrics', 
+//Route to get cpu metrics on containers. 
+metricsRouter.post(
+  '/cpu',
+  metricsController.convertToUnixTime,
+  metricsController.getCpu,
 
-(req, res) => {
+  (req, res) => {
+    return res.status(200).send(res.locals.data);
+  }
+);
 
-}
-)
+//Route to get memory metrics on containers
+metricsRouter.post(
+  '/',
+  metricsController.convertToUnixTime,
+  metricsController.getMemoryData,
 
-
-metricsRouter.get('/toggledMetrics', 
-
-(req, res) => {
-
-}
-)
+  (req, res) => {
+    return res.status(200).send(res.locals.data);
+  }
+);
 
 module.exports = metricsRouter;

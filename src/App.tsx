@@ -1,15 +1,15 @@
 import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
 import DockerContainers from './containers/dockerContainers';
 import Header from './containers/header';
+import MetricsContainers from './containers/metricsContainers';
 
 const App = (): JSX.Element => {
   return (
     <>
       <Header />
-      <div>
+      <div className='containers'>
         <DockerContainers />
-        {/* <MetricContainers/> */}
+        <MetricsContainers />
       </div>
     </>
   );

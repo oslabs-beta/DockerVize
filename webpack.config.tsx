@@ -29,15 +29,10 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png',
-            },
-          },
-        ],
+        test: /\.(png|svg)$/,
+        use: {
+          loader: 'url-loader',
+        },
       },
       {
         test: /\.(ts|tsx)$/,
