@@ -2,21 +2,49 @@ const request = require('supertest');
 const server = 'http://localhost:3000';
 const { exec } = require('child_process');
 const awaitExec = require('await-exec');
-const { doesNotMatch } = require('assert');
+const path = require('path');
+
 
 //testing route integration
-  
-beforeAll(async (done) => { 
-    const result = exec('docker ps', (err, stdout, stderr) => {
-        if (err) {
-            done(err);
-        }
-    });
-});
 
+/* 
+***************MUST HAVE DOCKER RUNNING TO RUN THESE TESTS *****************
+**Please make sure that the cadvisor and prometheus containers are running**
+***********Tests will fail if these containers aren't booted up*************
+
+Start cadvisor commands
+OS: docker run \
+--volume=/:/rootfs:ro \
+--volume=/var/run:/var/run:ro \
+--volume=/sys:/sys:ro \
+--volume=/var/lib/docker/:/var/lib/docker:ro \
+--volume=/dev/disk/:/dev/disk:ro \
+--publish=9101:8080 \
+--detach=true \
+--name=cadvisor \
+--privileged \
+--device=/dev/kmsg \
+gcr.io/cadvisor/cadvisor:v0.44.1-test ;
+
+linux and win32:
+docker run --volume=/sys:/sys:ro --volume=/cgroup:/cgroup:ro --publish=9101:8080 --detach=true --name=cadvisor gcr.io/cadvisor/cadvisor:latest
+
+Start prometheus command:
+
+`docker run --name prometheus -p 9090:9090 -d -v \
+${path.resolve(__dirname, '../assets/prometheus.yaml')}:/etc/prometheus/prometheus.yml \
+prom/prometheus ;
+
+
+*/
 
 describe('Route integration', () => {
-      
+      beforeAll(async () => { 
+        exec('docker run -d --name test_container -p 80:80 docker/getting-started');
+    });
+      afterAll(() => {
+         exec('docker rm --force test_container');
+    });
     
 
     describe('/metrics', () =>{
@@ -52,4 +80,64 @@ describe('Route integration', () => {
             });     
         });
     });
+
+    describe('/containers', () => {
+        describe('/container/exit', () => {
+            it('responds with a 200 status and a text/html content type', () => {
+                return request(server)
+                .post('/container/exit')
+                .expect('Content-Type', /text\/html/)
+                .expect(200)
+            })
+        })
+
+        describe('container/stop', () => {
+            jest.setTimeout(20000)
+            it('responds with a 200 status and a text/html content type', () => {
+                return request(server)
+                .post('/container/stop')
+                .send({
+                name: 'test_container'
+                })
+                .expect('Content-Type', /text\/html/)
+                .expect(200)
+            })
+        })
+
+        describe('/container/start', () => {
+            it('responds with a 200 status and a text/html content type', () => {
+                return request(server)
+                .post('/container/start')
+                .send({
+                name: 'test_container'
+                })
+                .expect('Content-Type', /text\/html/)
+                .expect(200)
+            })
+        })
+
+        describe('/container/pause', () => {
+            it('responds with a 200 status and a text/html content type', () => {
+                return request(server)
+                .post('/container/pause')
+                .send({
+                name: 'test_container'
+                })
+                .expect('Content-Type', /text\/html/)
+                .expect(200)
+            })
+        })
+
+        describe('/container/unpause', () => {
+            it('responds with a 200 status and a text/html content type', () => {
+                return request(server)
+                .post('/container/unpause')
+                .send({
+                name: 'test_container'
+                })
+                .expect('Content-Type', /text\/html/)
+                .expect(200)
+            })
+        })
+    })
 });

@@ -8,16 +8,20 @@ import { AllStates } from '../types';
 import { useGetCPUDataQuery } from '../services/containerQuery';
 
 export default function cpuTotalGraph() {
+
+  //Global state of containers
   const state = useSelector((state: AllStates) => state);
 
   let containerNames: string[] = [];
   let currentCpuMetric: number[] = [];
 
+  //Invoke get container query to grab raw CPU metrics from backend
   let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
-  // console.log('data: ', data.data);
 
+  //Populate dataset data (currentCpuMetric) for ChartJS 
   if (data && data.data) {
     for (let i = 0; i < data.data.length; i++) {
+      //Status Toggle is where Global State is stored after using useSelector
       const currentState: any = state.statusToggle;
 
       let id = data.data[i].id.slice(8, 20);
@@ -31,6 +35,8 @@ export default function cpuTotalGraph() {
       }
     }
   }
+  
+  //Grab metrics for Total CPU data (first element in raw data from Query)
   let totalCpu: number = 0;
   if (currentCpuMetric[0] !== undefined) {
     totalCpu = Number(
@@ -39,7 +45,7 @@ export default function cpuTotalGraph() {
   }
 
   return (
-    <div>
+    <div style={{ width: '400px' }}>
       <Doughnut
         data={{
           labels: containerNames,
@@ -72,7 +78,10 @@ export default function cpuTotalGraph() {
           plugins: {
             title: {
               display: true,
-              text: `Current Total CPU Usage: ${totalCpu}%`,
+              text: `Total CPU Usage: ${totalCpu}%`,
+              font: {
+                size: 13,
+              },
             },
           },
           radius: 125,

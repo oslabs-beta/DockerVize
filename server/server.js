@@ -6,7 +6,6 @@ const PORT = 3000;
 const cors = require('cors');
 
 //import routers here
-//router to get docker data
 const containerRouter = require('./routes/containerRouter');
 const metricsRouter = require('./routes/metricsRouter');
 

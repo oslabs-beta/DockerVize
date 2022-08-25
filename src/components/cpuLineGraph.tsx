@@ -8,15 +8,19 @@ import { AllStates, ChartObject } from '../types';
 import { useGetCPUDataQuery } from '../services/containerQuery';
 
 export default function cpuLineGraph() {
+
+  //Global state of containers
   const state = useSelector((state: AllStates) => state);
 
   let timeXAxis: string[] = [];
   let cpuYAxis: ChartObject[] = [];
 
+  //Invoke get container query to grab raw CPU metrics from backend
   let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
-  // console.log('data: ', data.data);
 
+  //Populate dataset data (cpuYAxis and timeXAxis) for ChartJS 
   if (data && data.data) {
+    //Build out timeXAxis
     const timeValues: any = data.data[0]['values'];
     for (const index in timeValues) {
       let convertedTime = new Date(
@@ -25,6 +29,7 @@ export default function cpuLineGraph() {
       timeXAxis.push(convertedTime);
     }
 
+    //Build out cpuYAxis - each container is a line on the Chart
     const buildYAxis = (name: string, data: Number[]) => {
       let resultObj = {
         label: name,
@@ -55,7 +60,9 @@ export default function cpuLineGraph() {
       return resultObj;
     };
 
+
     for (let i = 0; i < data.data.length; i++) {
+       //Status Toggle is where Global State is stored after using useSelector
       const currentState: any = state.statusToggle;
 
       let id = data.data[i].id.slice(8, 20);
@@ -91,6 +98,9 @@ export default function cpuLineGraph() {
             title: {
               display: true,
               text: 'Container CPU Usage',
+              font: {
+                size: 13,
+              },
             },
           },
           maintainAspectRatio: false,

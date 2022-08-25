@@ -7,22 +7,23 @@ import { useSelector } from 'react-redux';
 import { AllStates } from '../types';
 import {
   useGetMemoryDataQuery,
-  // useGetCPUDataQuery,
 } from '../services/containerQuery';
 
 export default function memoryTotalGraph() {
+
+  //Global state of containers
   const state = useSelector((state: AllStates) => state);
 
   let containerNames: string[] = [];
   let currentMemoryMetric: number[] = [];
 
-  // let data = useGetCPUDataQuery(undefined, { pollingInterval: 1000 });
+  //Invoke get container query to grab raw Memory metrics from backend
   let data = useGetMemoryDataQuery(undefined, { pollingInterval: 1000 });
-  // console.log('data1: ', data.data);
-  // console.log('data2: ', data2.data);
 
+  //Populate dataset data (currentMemoryMetric) for ChartJS 
   if (data && data.data) {
     for (let i = 0; i < data.data.length; i++) {
+      //Status Toggle is where Global State is stored after using useSelector
       const currentState: any = state.statusToggle;
 
       let id = data.data[i].metric.id.slice(8, 20);
@@ -40,6 +41,7 @@ export default function memoryTotalGraph() {
     }
   }
 
+  //Grab metrics for Total Memory data (first element in raw data from Query)
   let totalMemory: number = 0;
   if (currentMemoryMetric[0] !== undefined) {
     totalMemory = Number(
@@ -48,7 +50,7 @@ export default function memoryTotalGraph() {
   }
 
   return (
-    <div>
+    <div style={{ width: '400px' }}>
       <Doughnut
         data={{
           labels: containerNames,
@@ -76,17 +78,12 @@ export default function memoryTotalGraph() {
         }}
         options={{
           plugins: {
-            // legend: {
-            //   labels: {
-            //     padding: 0, //default is 10
-            //   },
-            //   display: true,
-            //   position: 'top',
-            //   align: 'center',
-            // },
             title: {
               display: true,
               text: `Total Memory Usage: ${totalMemory} mb`,
+              font: {
+                size: 13,
+              },
             },
           },
           radius: 125,

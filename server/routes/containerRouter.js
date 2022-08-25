@@ -7,9 +7,13 @@ const promController = require('../controllers/promController');
 const cadvisorController = require('../controllers/cadvisorController');
 
 //exit prometheus and cadvisor containers - for future functionality
-containerRouter.get('/exit', containerController.stopContainers, (req, res) => {
-  return res.status(200).send(res.locals.message);
-});
+containerRouter.post(
+  '/exit',
+  containerController.stopContainers,
+  (req, res) => {
+    return res.status(200).send(res.locals.message);
+  }
+);
 
 //Route to stop one container
 containerRouter.post('/stop', containerController.stopOne, (req, res) => {
@@ -30,7 +34,6 @@ containerRouter.post('/pause', containerController.pauseOne, (req, res) => {
 containerRouter.post('/unpause', containerController.unpauseOne, (req, res) => {
   return res.status(200).send(res.locals.message);
 });
-
 
 //start prometheus and cadvisor and get a list of all your containers
 containerRouter.get(
