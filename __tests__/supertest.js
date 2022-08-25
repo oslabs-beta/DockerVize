@@ -39,14 +39,16 @@ prom/prometheus ;
 */
 
 describe('Route integration', () => {
-      beforeAll(async () => { 
+    //Before we run tests, we need a container to test our endpoints on
+    beforeAll(async () => { 
         exec('docker run -d --name test_container -p 80:80 docker/getting-started');
     });
-      afterAll(() => {
-         exec('docker rm --force test_container');
+      //after the tests complete, remove the container
+    afterAll(() => {
+        exec('docker rm --force test_container');
     });
     
-
+    //Testing metrics routes
     describe('/metrics', () =>{
         describe('POST', () => {
             it('responds with 200 status and application/json content type', () => {
@@ -81,6 +83,7 @@ describe('Route integration', () => {
         });
     });
 
+    //Testing container functionality
     describe('/containers', () => {
         describe('/container/exit', () => {
             it('responds with a 200 status and a text/html content type', () => {
