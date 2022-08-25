@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const metricsController = {};
 
-//Unix time conversion is used to pass time values into the metrics query.
+//Unix time conversion is used to pass unix time values into the metrics query.
 metricsController.convertToUnixTime = (req, res, next) => {
   try {
     let currentTime = new Date().valueOf();

@@ -16,15 +16,19 @@ interface ChartObject {
 }
 
 export default function memoryLineGraph() {
+
+  //Global state of containers
   const state = useSelector((state: AllStates) => state);
-  // console.log('is this state: ', state.statusToggle);
 
   let timeXAxis = [];
   let bytesYAxis: ChartObject[] = [];
 
+  //Invoke get container query to grab raw Memory metrics from backend
   let data = useGetMemoryDataQuery(undefined, { pollingInterval: 1000 });
-  // console.log('queries data: ', data);
+
+  //Populate dataset data (cpuYAxis and timeXAxis) for ChartJS 
   if (data && data.data) {
+    //Build out timeXAxis
     const timeValues: any = data.data[0]['values'];
     for (const index in timeValues) {
       let convertedTime = new Date(
@@ -33,6 +37,7 @@ export default function memoryLineGraph() {
       timeXAxis.push(convertedTime);
     }
 
+    //Build out cpuYAxis - each container is a line on the Chart
     const buildYAxis = (name: string, data: Number[]) => {
       let resultObj = {
         label: name,
@@ -64,6 +69,7 @@ export default function memoryLineGraph() {
     };
 
     for (let i = 0; i < data.data.length; i++) {
+      //Status Toggle is where Global State is stored after using useSelector
       const currentState: any = state.statusToggle;
       let id = data.data[i].metric.id.slice(8, 20);
 
