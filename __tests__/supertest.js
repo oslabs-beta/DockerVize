@@ -5,19 +5,7 @@ const awaitExec = require('await-exec');
 const { doesNotMatch } = require('assert');
 
 //testing route integration
-
-//run a conditional check before each test to make sure Docker Daemon is running
-// const result = exec('docker ps', (error, stdout, stderr) => {
-//     console.log('stdout', stdout);
-//     console.log('reg error', error);
-//     console.log('stdedrr', stderr)
-// });
-//endpoints to test:  /metrics, /metrics/cpu
-
-//const itif = (condition) => condition ? it : it.skip;
-
-
-    
+  
 beforeAll(async (done) => { 
     const result = exec('docker ps', (err, stdout, stderr) => {
         if (err) {
@@ -61,10 +49,7 @@ describe('Route integration', () => {
                 })
                 .expect('Content-Type', /application\/json/)
                 .expect(200)
-                
-            });
-            
+            });     
         });
     });
-
 });

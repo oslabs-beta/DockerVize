@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const metricsController = {};
 
-//Unix time conversion is used to pass time values into the metrics query.
+//Unix time conversion is used to pass time values into the metrics query. Prometheus requires Unix time.
 metricsController.convertToUnixTime = (req, res, next) => {
   try {
     let currentTime = new Date().valueOf();
@@ -13,7 +13,6 @@ metricsController.convertToUnixTime = (req, res, next) => {
     res.locals.start = start;
     return next();
   } catch (error) {
-    console.log('metricsController error: convertToUnixTime method');
     return next(err);
   }
 };
@@ -77,7 +76,6 @@ metricsController.getCpu = async (req, res, next) => {
     res.locals.data = cpuArray;
     return next();
   } catch (err) {
-    console.log('metricsController error: getData method');
     return next(err);
   }
 };
