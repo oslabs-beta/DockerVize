@@ -17,6 +17,7 @@
  - [Typescript](https://www.typescriptlang.org/)
  - [Prometheus](https://prometheus.io/)
  - [CAdvisor](https://github.com/google/cadvisor)
+ - [Jest](https://jestjs.io/)
  
  <h2>Getting Started</h2>
 
