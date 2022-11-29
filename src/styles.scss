@@ -11,10 +11,11 @@ $bg: black;
 h1 {
   color: $primary-color;
   background-color: transparent;
-  color: white;
+  color: black;
   flex-direction: column;
   align-content: center;
-  font-size: 50px;
+  font-size: 2rem;
+  font-weight: 400;
 }
 
 .docker-container {
@@ -25,7 +26,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   margin: 30px 30px;
-  // background-color: #11c1e0;
 }
 
 .metrics-container {
@@ -34,7 +34,6 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin: 30px 0;
-  // border: 1px black solid;
 }
 
 .container {
@@ -61,15 +60,34 @@ h1 {
 }
 
 .header-container {
-  margin-bottom: 0px;
-  // border: 1px solid #4A73E8;
+  margin-bottom: 50px;
   display: flex;
-  justify-content: space-around;
   width: 100%;
   align-items: center;
-  // background: red;
-  height: 125px;
-  background: linear-gradient(rgba(19, 119, 234, 0.964), lightblue);
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  opacity: 0.95;
+  height: 5rem;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.header-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4%;
+}
+
+.header-right {
+  margin-right: 4%;
+}
+
+.logo {
+  max-height: 75px;
+  max-width: 75px;
+  background-color: transparent;
+  margin-right: 25px;
 }
 
 .header-container img {
@@ -82,7 +100,6 @@ h1 {
 
 .header-component {
   background-color: transparent;
-  // font-weight: 200;
 }
 
 .inner-metrics-container {
@@ -97,11 +114,13 @@ h1 {
   align-items: center;
 }
 
-//Quit Button
+//Log State Button
 .header-component button {
+  height: 100%;
+  min-width: 155px;
   border-radius: 5px;
   padding: 0.8em 1.8em;
-  border: 2px solid #252cb0;
+  border: 2px solid #4a73e8;
   position: relative;
   overflow: hidden;
   background-color: transparent;
@@ -112,17 +131,22 @@ h1 {
   z-index: 1;
   font-family: inherit;
   color: #252cb0;
+  display: inline-flex;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
 }
 
 .header-component button::before {
   content: '';
   width: 0;
-  height: 300%;
+  height: 400%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(45deg);
-  background: #252cb0;
+  // background: #252cb0;
+  background: #4a73e8;
   transition: 0.5s ease;
   display: block;
   z-index: -1;
@@ -278,5 +302,3 @@ select {
 select:hover {
   cursor: pointer;
 }
-
-///
